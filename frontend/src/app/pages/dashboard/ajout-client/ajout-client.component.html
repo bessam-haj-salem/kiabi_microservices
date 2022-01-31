@@ -1,0 +1,79 @@
+<form [formGroup]="addForm" (ngSubmit)="onSubmitAdd()" #ref>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <input
+          type="raison_social"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="raison social"
+          formControlName="raison_social"
+
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <input
+          type="num_sirette"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="N° Sirette"
+          formControlName="num_sirette"
+
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <input
+          type="adresse"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="Adresse"
+          formControlName="adresse"
+
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <input
+          type="email"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="nom@example.com"
+          formControlName="email"
+
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <input
+          type="telephone"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="Téléphone"
+          formControlName="telephone"
+
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+          <button type="button" (click)="onSubmitAdd()"class="btn btn-outline-default">Confirmer</button>
+        </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group"></div>
+    </div>
+   
+  </div>
+</form>
