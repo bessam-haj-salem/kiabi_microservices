@@ -1,0 +1,48 @@
+{
+    "version": 2,
+    "host" : [
+        "http://localhost:8099"
+    ],
+    "extra_config": {
+      "github_com/devopsfaith/krakend-cors": {
+        "allow_origins": [
+          "*"
+        ],
+        "expose_headers": [
+          "Content-Length"
+        ],
+        "max_age": "12h",
+        "allow_methods": [
+          "GET"
+        ],
+        "allow_headers": [
+          "*"
+        ]
+      }
+    },
+    "timeout": "3000ms",
+    "cache_ttl": "300s",
+    "output_encoding": "string",
+    "name": "api-gateway",
+    "port": 8099,
+    "read_timeout": "5s",
+    "idle_timeout": "5s",
+    "write_timeout": "5s",
+    "read_header_timeout": "5s",
+    "endpoints": [
+      {
+        "endpoint": "/clients",
+        "method" : "GET",
+        "backend": [
+          {
+            "encoding" : "string",
+            "url_pattern": "/api/clients",
+            "method": "GET",
+            "host": [
+              "http://localhost:3000"
+            ]
+          }
+        ]
+      }
+    ]
+  }
