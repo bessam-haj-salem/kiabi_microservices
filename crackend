@@ -13,15 +13,17 @@ krakend check -d -c krakend.json
 service krakend stop
 
 
-krakend run -c /etc/krakend/krakend.json -d
+krakend run -c /etc/krakend/krakend.json -d -t
 
 en cas de problem:
+// ccopy
+cp krakend.json  krakend.json.save-16-02-2022-09h53 
 
-cp krakend.json.save-09-12-2021-11h22 krakend.json 
+
 cp krakend.json.save-13-12-2021-13h41 krakend.json 
 krakend run -c /etc/krakend/krakend.json -d
 
 no problem: 
 service krakend start
 
-
+Nerw#?&QH-Ze6f&5e([7^*d34{6747d:

@@ -14,14 +14,33 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const product_module_1 = require("./product/product.module");
 const client_module_1 = require("./client/client.module");
+const core_1 = require("@nestjs/core");
+const http_error_filter_1 = require("./shared/http.error.filter");
+const logging_interceptor_1 = require("./shared/logging.interceptor");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forRoot('mongodb://localhost:27017/nest_main', { autoCreate: true }), product_module_1.ProductModule, client_module_1.ClientModule,
-            axios_1.HttpModule,],
+        imports: [
+            mongoose_1.MongooseModule.forRoot('mongodb://localhost:27017/nest_main', {
+                autoCreate: true,
+            }),
+            product_module_1.ProductModule,
+            client_module_1.ClientModule,
+            axios_1.HttpModule,
+        ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [
+            app_service_1.AppService,
+            {
+                provide: core_1.APP_FILTER,
+                useClass: http_error_filter_1.HttpErrorFilter,
+            },
+            {
+                provide: core_1.APP_INTERCEPTOR,
+                useClass: logging_interceptor_1.LoggingInterceptor
+            }
+        ],
     })
 ], AppModule);
 exports.AppModule = AppModule;

@@ -17,22 +17,34 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const client_model_1 = require("./client.model");
+const mongoose = require('mongoose');
+const conn = mongoose.connection;
 let ClientService = class ClientService {
     constructor(clientModel) {
         this.clientModel = clientModel;
+        this.count = 0;
     }
     async all() {
-        return this.clientModel.find().exec();
+        let res = await this.clientModel.find().exec();
+        return res;
     }
     async create(data) {
-        return new this.clientModel(data).save();
+        this.count++;
+        if (this.count === 1) {
+            console.log('connection closed');
+            return new this.clientModel(data).save();
+        }
     }
     async findOne(id) {
-        return this.clientModel.findOne({ id });
+        try {
+            const clientSelected = this.clientModel.findOne({ id });
+            return clientSelected;
+        }
+        catch (_a) {
+            throw new common_1.HttpException('Not Found', common_1.HttpStatus.NOT_FOUND);
+        }
     }
     async update(id, data) {
-        console.log(id);
-        console.log(data);
         return this.clientModel.findOneAndUpdate({ id }, data);
     }
     async delete(id) {

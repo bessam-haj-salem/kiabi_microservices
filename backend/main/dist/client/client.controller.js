@@ -18,6 +18,7 @@ let ClientController = class ClientController {
     constructor(clientService, httpService) {
         this.clientService = clientService;
         this.httpService = httpService;
+        this.count = 0;
     }
     async all() {
         return this.clientService.all();
@@ -32,8 +33,11 @@ let ClientController = class ClientController {
             telephone: client.telephone
         });
     }
-    async clientUpdated(client) {
-        await this.clientService.update(client.id, {
+    async clientCreate(client) {
+        console.log("client created ");
+        console.log(client);
+        this.count++;
+        this.clientService.create({
             id: client.id,
             raison_social: client.raison_social,
             num_sirette: client.num_sirette,
@@ -41,10 +45,30 @@ let ClientController = class ClientController {
             email: client.email,
             telephone: client.telephone
         });
+        console.log(`the count is ${this.count}`);
+    }
+    async clientUpdated(client) {
+        console.log(client);
+        const updatedclient = await this.clientService.findOne(client.id);
+        if (updatedclient) {
+            await this.clientService.update(client.id, {
+                id: client.id,
+                raison_social: client.raison_social,
+                num_sirette: client.num_sirette,
+                adresse: client.adresse,
+                email: client.email,
+                telephone: client.telephone
+            });
+        }
     }
     async clientDeleted(id) {
+        const deletedclient = await this.clientService.findOne(id);
+        console.log("deleted client");
+        console.log(deletedclient);
         console.log(`client id to delete ${id}`);
-        await this.clientService.delete(id);
+        if (deletedclient) {
+            await this.clientService.delete(id);
+        }
     }
 };
 __decorate([
@@ -59,6 +83,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ClientController.prototype, "clientCreated", null);
+__decorate([
+    (0, common_1.Post)(),
+    (0, microservices_1.EventPattern)('client_created'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ClientController.prototype, "clientCreate", null);
 __decorate([
     (0, microservices_1.EventPattern)('client_updated'),
     __metadata("design:type", Function),

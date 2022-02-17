@@ -17,41 +17,41 @@ export class IdeaController {
     }
 
 
-    @Get()
-    showAllIdeas(){
-        return this.ideaService.showAll()
-    }
+    // @Get()
+    // showAllIdeas(){
+    //     return this.ideaService.showAll()
+    // }
 
-    @Post()
-    @UseGuards(new AuthGuard())
-    @UsePipes( new ValidationPipe())
-    createIdea(@User('id') user,@Body() data:IdeaDTO){
-        this.logData({user,data})
+    // @Post()
+    // @UseGuards(new AuthGuard())
+    // @UsePipes( new ValidationPipe())
+    // createIdea(@User('id') user,@Body() data:IdeaDTO){
+    //     this.logData({user,data})
 
-        this.logger.log(JSON.stringify(data))
-        return this.ideaService.create(user,data)
-    }
+    //     this.logger.log(JSON.stringify(data))
+    //     return this.ideaService.create(user,data)
+    // }
 
-    @Get(':id')
-    readIdea(@Param('id') id :string){
-        return this.ideaService.read(id)
-    }
+    // @Get(':id')
+    // readIdea(@Param('id') id :string){
+    //     return this.ideaService.read(id)
+    // }
 
-    @Put(':id')
-    @UseGuards(new AuthGuard())
-    @UsePipes( new ValidationPipe())
-    updateIdea(@Param('id') id:string,@User('id') user,@Body() data: Partial<IdeaDTO>){
-        this.logData({id, user,data})
+    // @Put(':id')
+    // @UseGuards(new AuthGuard())
+    // @UsePipes( new ValidationPipe())
+    // updateIdea(@Param('id') id:string,@User('id') user,@Body() data: Partial<IdeaDTO>){
+    //     this.logData({id, user,data})
 
-        return this.ideaService.update(id,user,data)
-    }
+    //     return this.ideaService.update(id,user,data)
+    // }
 
-    @Delete(':id')
-    @UseGuards(new AuthGuard())
-    destroyIdea(@Param('id') id:string, @User('id') user){
-        this.logData({id, user})
-        return this.ideaService.destroy(id, user)
-    }
+    // @Delete(':id')
+    // @UseGuards(new AuthGuard())
+    // destroyIdea(@Param('id') id:string, @User('id') user){
+    //     this.logData({id, user})
+    //     return this.ideaService.destroy(id, user)
+    // }
 
 
 

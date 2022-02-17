@@ -6,11 +6,16 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { ClipboardModule } from "ngx-clipboard";
 
-import { DashboardComponent } from "./dashboard.component";
+// import { DashboardComponent } from "./dashboard.component";
 
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AjoutClientComponent } from "src/app/pages/dashboard/ajout-client/ajout-client.component";
 import { DashboardRoutes } from "./dashboard.routing";
+import { ListeClientsComponent } from './liste-clients/liste-clients.component';
+import { ComponentsModule } from "src/app/components/components.module";
+import { DashboardComponent } from "./dashboard.component";
+import { ClientAllComponent } from "./client-all/client-all.component";
+// import { ComponentsModule } from "src/app/components/components.module";
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -21,8 +26,9 @@ import { DashboardRoutes } from "./dashboard.routing";
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
+    ComponentsModule,
     ClipboardModule,
   ],
-  declarations: [DashboardComponent, AjoutClientComponent],
+  declarations: [ AjoutClientComponent, ListeClientsComponent,DashboardComponent, ClientAllComponent],
 })
-export class AdminLayoutModule {}
+export class DashboardModule {}

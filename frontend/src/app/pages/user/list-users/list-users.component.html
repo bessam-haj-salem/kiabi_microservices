@@ -1,0 +1,294 @@
+
+
+  <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+      <div class="header-body">
+        <!-- Card stats -->
+        <div class="row">
+          <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">
+                      Utilisateurs
+                    </h5>
+                    <span class="h2 font-weight-bold mb-0">350</span>
+                  </div>
+                  <div class="col-auto">
+                    <div
+                      class="
+                        icon icon-shape
+                        bg-danger
+                        text-white
+                        rounded-circle
+                        shadow
+                      "
+                    >
+                      <i class="fas fa-chart-bar"></i>
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-3 mb-0 text-muted text-sm">
+                  <span class="text-success mr-2"
+                    ><i class="fa fa-arrow-up"></i> 3.48%</span
+                  >
+                  <span class="text-nowrap">Depuis le mois dernier</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">
+                      CHIFFRE D'AFFAIRE
+                    </h5>
+                    <span class="h2 font-weight-bold mb-0">3000K$</span>
+                  </div>
+                  <div class="col-auto">
+                    <div
+                      class="
+                        icon icon-shape
+                        bg-warning
+                        text-white
+                        rounded-circle
+                        shadow
+                      "
+                    >
+                      <i class="fas fa-chart-pie"></i>
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-3 mb-0 text-muted text-sm">
+                  <span class="text-danger mr-2"
+                    ><i class="fas fa-arrow-down"></i> 3.48%</span
+                  >
+                  <span class="text-nowrap">Depuis la semaine dernière</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">
+                      recouvrement
+                    </h5>
+                    <span class="h2 font-weight-bold mb-0">1200K$</span>
+                  </div>
+                  <div class="col-auto">
+                    <div
+                      class="
+                        icon icon-shape
+                        bg-yellow
+                        text-white
+                        rounded-circle
+                        shadow
+                      "
+                    >
+                      <i class="fas fa-users"></i>
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-3 mb-0 text-muted text-sm">
+                  <span class="text-warning mr-2"
+                    ><i class="fas fa-arrow-down"></i> 1.10%</span
+                  >
+                  <span class="text-nowrap">Depuis hier</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">
+                      Performance
+                    </h5>
+                    <span class="h2 font-weight-bold mb-0">49,65%</span>
+                  </div>
+                  <div class="col-auto">
+                    <div
+                      class="
+                        icon icon-shape
+                        bg-info
+                        text-white
+                        rounded-circle
+                        shadow
+                      "
+                    >
+                      <i class="fas fa-percent"></i>
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-3 mb-0 text-muted text-sm">
+                  <span class="text-success mr-2"
+                    ><i class="fas fa-arrow-up"></i> 12%</span
+                  >
+                  <span class="text-nowrap">Depuis le mois dernier</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid mt--7">
+    <div class="row mt-5">
+      <div class="col-xl-11 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="card-header border-0">
+            <div class="row align-items-center">
+              <div class="col">
+                <h3 class="mb-0" *ngIf="boolListForm">Liste Utilisateurs</h3>
+                
+                <h3 class="mb-0" *ngIf="boolEditForm">Editer Utilisateur</h3>
+              </div>
+              <div class="col text-right">
+                <a
+                  (click)="openAddForm()"
+                  class="btn btn-sm btn-primary"
+                  *ngIf="boolListForm"
+                  >Ajouter</a
+                >
+                <a
+                  (click)="closeAddForm()"
+                  class="btn btn-sm btn-primary"
+                  *ngIf=" boolEditForm"
+                  >Annuler</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive" *ngIf="boolTablesForm">
+            <!-- Projects table -->
+            <table
+              class="table align-items-center table-flush"
+              *ngIf="boolListForm"
+            >
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Id</th>
+
+                  <th scope="col">Nom Utilisateur</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Actions</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <th scope="row">
+                    {{ user.id }}
+                  </th>
+                  <td>
+                    {{ user.username }}
+                  </td>
+                  <td>
+                    {{ user.email }}
+                  </td>
+                  <!-- <td>
+                  <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
+                </td> -->
+                 
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-success"
+                      (click)="updateUser(user.id)"
+                    >
+                      Editer
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="deleteUser(user.id)"
+                    >
+                      Effacer
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()">
+              <table
+                class="table align-items-center table-flush"
+                *ngIf="boolEditForm"
+              >
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Id</th>
+
+                    <th scope="col">Nom Utilisateur</th>
+                    <th scope="col">Email</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      {{ userSelected.id }}
+                    </th>
+                    <td>
+                      <input
+                        type="username"
+                        class="form-control editFont"
+                        id="exampleFormControlInput1"
+                        placeholder="Nom Utilisateur"
+                        formControlName="username"
+                        [(ngModel)]="userSelected.username"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="email"
+                        class="form-control editFont"
+                        id="exampleFormControlInput1"
+                        placeholder="Email"
+                        formControlName="email"
+                        [(ngModel)]="userSelected.email"
+                      />
+                    </td>
+                    <!-- <td>
+                  <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
+                </td> -->
+                    <td>
+                      <input
+                        type="password"
+                        class="form-control editFont"
+                        id="exampleFormControlInput1"
+                        placeholder="Mot de Passe"
+                        formControlName="password"
+                        [(ngModel)]="userSelected.password"
+                      />
+                    </td>
+                    
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-outline-default"
+                        (click)="onSubmitEdit()"
+                      >
+                        Confirmer
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+  
+

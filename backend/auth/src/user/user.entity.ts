@@ -7,8 +7,8 @@ import { IdeaEntity } from "src/idea/idea.entity";
 @Entity('user')
 export class UserEntity {
 
-    @PrimaryGeneratedColumn('uuid')
-    id: string
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @CreateDateColumn()
     created:Date
@@ -21,13 +21,16 @@ export class UserEntity {
 
     @Column('text')
     password:string 
-     
-    @OneToMany(type => IdeaEntity,idea => idea.author)
-    ideas: IdeaEntity[]
 
-    @ManyToMany(type => IdeaEntity, {cascade:true})
-    @JoinTable()
-    bookmarks:IdeaEntity[]
+    @Column('text')
+    email:string 
+     
+    // @OneToMany(type => IdeaEntity,idea => idea.author)
+    // ideas: IdeaEntity[]
+
+    // @ManyToMany(type => IdeaEntity, {cascade:true})
+    // @JoinTable()
+    // bookmarks:IdeaEntity[]
 
     @BeforeInsert()
     async hashPassword() {
@@ -35,18 +38,18 @@ export class UserEntity {
     }
 
     toResponseObject(showToken:boolean = true):UserRO {
-        const {id,created, username,token} = this
-        const responseObject:any  = {id, created, username}
+        const {id,created, username, email,password,token} = this
+        const responseObject:any  = {id, created, username, email, password}
         if(showToken) {
             responseObject.token = token
         }
 
-        if(this.ideas) {
-            responseObject.ideas = this.ideas
-        }
-        if(this.bookmarks) {
-            responseObject.bookmarks = this.bookmarks
-        }
+        // if(this.ideas) {
+        //     responseObject.ideas = this.ideas
+        // }
+        // if(this.bookmarks) {
+        //     responseObject.bookmarks = this.bookmarks
+        // }
         return responseObject
 
     }

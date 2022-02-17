@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscriber } from 'rxjs';
 import { SubSink } from 'subsink';
@@ -9,7 +9,7 @@ import { ClientService } from '../services/client.service';
   templateUrl: './ajout-client.component.html',
   styleUrls: ['./ajout-client.component.css']
 })
-export class AjoutClientComponent implements OnInit {
+export class AjoutClientComponent implements OnInit, OnDestroy {
   @Output() addEvent = new EventEmitter<string>()
   addForm: FormGroup
   private subs = new SubSink()
@@ -38,6 +38,8 @@ onSubmitAdd() {
   })
 
 }
-
+ngOnDestroy(): void {
+    this.subs.unsubscribe()
+}
 
 }

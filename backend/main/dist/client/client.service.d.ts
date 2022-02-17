@@ -2,6 +2,7 @@ import { Model } from 'mongoose';
 import { Client, ClientDocument } from './client.model';
 export declare class ClientService {
     private readonly clientModel;
+    count: number;
     constructor(clientModel: Model<ClientDocument>);
     all(): Promise<Client[]>;
     create(data: any): Promise<Client>;

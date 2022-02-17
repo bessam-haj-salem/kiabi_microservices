@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -12,7 +12,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './components/components.module';
-import { AjoutClientComponent } from './pages/dashboard/ajout-client/ajout-client.component';
+// import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { TestComponent } from './test/test.component';
+import { Test1Component } from './test1/test1.component';
+import { TestModule } from './test.module';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -24,14 +28,26 @@ import { AjoutClientComponent } from './pages/dashboard/ajout-client/ajout-clien
     ComponentsModule,
     NgbModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TestModule
+    
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
+    // DashboardComponent,
+   
   ],
-  providers: [],
+  providers: [
+    AuthInterceptor,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useExisting: AuthInterceptor,
+      multi: true,
+      // test
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

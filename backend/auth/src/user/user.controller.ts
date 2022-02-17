@@ -1,24 +1,25 @@
-import { Body, Controller, Get, Post, UseGuards, UsePipes } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, UseGuards, UsePipes } from '@nestjs/common';
 import { UserDTO } from './user.dto';
 import { UserService } from './user.service';
 import {ValidationPipe} from "../shared/validation.pipe"
 import { AuthGuard } from '../shared/auth.guard';
 import { User } from './user.decorator';
+import { ClientProxy } from '@nestjs/microservices';
 
 
-@Controller()
+@Controller('api/users')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, @Inject('CLIENT_SERVICE') private readonly client: ClientProxy) {}
 
-  @Get('api/users')
-  // @UseGuards(new AuthGuard())
-  // showAllUsers(@User('username') user) {
-  //     console.log(user)
-  //   return this.userService.showAll();
-  // }
-  showAllUsers() {
-  return this.userService.showAll();
-}
+  @Get()
+  @UseGuards(new AuthGuard())
+  showAllUsers(@User('username') user) {
+      console.log(user)
+    return this.userService.showAll();
+  }
+//   showAllUsers() {
+//   return this.userService.showAll();
+// }
   @Post('login')
   @UsePipes(new ValidationPipe())
   login(@Body() data: UserDTO) {
@@ -27,7 +28,26 @@ export class UserController {
 
   @Post('register')
   @UsePipes(new ValidationPipe())
-  register(@Body() data:UserDTO) {
-    return this.userService.register(data);
+  async register(@Body() data:UserDTO) {
+    console.log(data);
+    const user = await this.userService.register(data);
+    this.client.emit('user_created', user)
+    return user
+  }
+
+  @Put('update/:id')
+  async updateIdea(@Param('id') id:number,@Body() data: Partial<UserDTO>){
+
+        const user = await this.userService.get(id)
+        const newuser = await this.userService.update(id,data)
+        console.log(newuser);
+        this.client.emit('user_updated', data)
+        return user
+    }
+  @Delete('delete/:id')
+  async delete(@Param('id') id: number) {
+    await this.userService.delete(id)
+    this.client.emit('user_deleted', id)
+
   }
 }

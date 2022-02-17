@@ -26,7 +26,7 @@
         <a class="nav-link" role="button" ngbDropdownToggle>
           <div class="media align-items-center">
             <span class="avatar avatar-sm rounded-circle">
-              <img alt="Image placeholder" src="./assets/img/theme/team-1-800x800.jpg">
+              <img alt="Image placeholder" src="./assets/img/brand/bessam.png">
             </span>
           </div>
         </a>
@@ -65,7 +65,7 @@
         <div class="row">
           <div class="col-6 collapse-brand">
             <a  routerLinkActive="active" [routerLink]="['/dashboard']">
-              <img src="./assets/img/brand/blue.png">
+              <img src="./assets/img/brand/kiabi.jpg">
             </a>
           </div>
           <div class="col-6 collapse-close">
@@ -90,7 +90,7 @@
       <!-- Navigation -->
       <ul class="navbar-nav">
           <li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-              <a routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link">
+              <a routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link" (mouseover)="preloadBundle(menuItem.path)">
                   <i class="ni {{menuItem.icon}}"></i>
                   {{menuItem.title}}
               </a>

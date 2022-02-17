@@ -23,14 +23,14 @@ export class IdeaEntity {
 
   @Column('text') description: string;
 
-  @ManyToOne(type => UserEntity, author => author.ideas)
-  author: UserEntity;
+  // @ManyToOne(type => UserEntity, author => author.ideas)
+  // author: UserEntity;
 
-  @ManyToMany(type => UserEntity, {cascade:true})
-  @JoinTable()
-  upvotes: UserEntity[]
+  // @ManyToMany(type => UserEntity, {cascade:true})
+  // @JoinTable()
+  // upvotes: UserEntity[]
 
-  @ManyToMany(type => UserEntity, {cascade: true})
-  @JoinTable()
-  downvotes:UserEntity[]
+  // @ManyToMany(type => UserEntity, {cascade: true})
+  // @JoinTable()
+  // downvotes:UserEntity[]
 }

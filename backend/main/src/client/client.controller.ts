@@ -1,20 +1,21 @@
 import { HttpService } from '@nestjs/axios';
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { EventPattern } from '@nestjs/microservices';
 import { ClientService } from './client.service';
 
 @Controller('clients')
 export class ClientController { 
+    count = 0
 
     constructor(private clientService: ClientService, private httpService: HttpService) {}
 
     @Get()
     async all() {
+        
         return this.clientService.all()
     }
 
   
-    
     @EventPattern('client_created')
     async clientCreated(client: any) {
         this.clientService.create({
@@ -30,10 +31,13 @@ export class ClientController {
         })
 
     }
-    @EventPattern('client_updated')
-    async clientUpdated(client: any) {
-
-       await this.clientService.update(client.id,{
+    @Post()
+    @EventPattern('client_created')
+    async clientCreate(client: any) {
+        console.log("client created ")
+        console.log(client)
+        this.count++
+        this.clientService.create({
             id: client.id,
             raison_social: client.raison_social,
             num_sirette: client.num_sirette,
@@ -41,15 +45,43 @@ export class ClientController {
             email: client.email,
             telephone: client.telephone
 
+
+
         })
+        // return
+        console.log(`the count is ${this.count}`)
 
     }
+    @EventPattern('client_updated')
+    async clientUpdated(client: any) {
+        console.log(client);
+        const updatedclient = await this.clientService.findOne(client.id)
+        if(updatedclient) {
+            await this.clientService.update(client.id,{
+                id: client.id,
+                raison_social: client.raison_social,
+                num_sirette: client.num_sirette,
+                adresse: client.adresse,
+                email: client.email,
+                telephone: client.telephone
+    
+            })
+        }
+       
 
+    }
     @EventPattern('client_deleted')
     async clientDeleted(id: number) {
+        const deletedclient = await this.clientService.findOne(id)
+        console.log("deleted client")
+        console.log(deletedclient)
         console.log(`client id to delete ${id}`);
+        if(deletedclient) {
+            await this.clientService.delete(id)
 
-       await this.clientService.delete(id)
+        }
+       
+
 
     }
 }

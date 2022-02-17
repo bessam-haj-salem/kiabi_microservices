@@ -8,17 +8,20 @@ import { Client } from '../models/Client.model';
 })
 export class ClientService {
 
-  urlGetClients: string
-  urlAddClient: string
-  urlUpdateClient: string
+  // urlGetClients: string
+  // urlAddClient: string
+  urlClients: string
+  // urlUpdateClient: string
 
-  urlDeleteClient:string
+  // urlDeleteClient:string
 
   constructor(private http: HttpClient) { 
-    this.urlGetClients = environment.urlGetClients
-    this.urlAddClient = environment.urlAddClient
-    this.urlDeleteClient = environment.urlDeleteClient
-    this.urlUpdateClient = environment.urlUpdateClient
+    // this.urlGetClients = environment.urlGetClients
+    // this.urlAddClient = environment.urlAddClient
+    this.urlClients = environment.urlClients
+
+    // this.urlDeleteClient = environment.urlDeleteClient
+    // this.urlUpdateClient = environment.urlUpdateClient
 
 
 
@@ -26,17 +29,17 @@ export class ClientService {
 
 
   getClients() {
-   return  this.http.get<Client[]>(this.urlGetClients)
+   return  this.http.get<any>(this.urlClients + 123)
   }
 
   addClient(data) {
-    return this.http.post<Client>(this.urlAddClient, data)
+    return this.http.post<Client>(this.urlClients + 123, data)
   }
   editClient(data) {
-    return this.http.put<Client>(this.urlUpdateClient + data.id, data)
+    return this.http.put<Client>(this.urlClients + data.id, data)
   }
 
   deleteClient(id) {
-    return this.http.delete(this.urlDeleteClient + id)
+    return this.http.delete<any>(this.urlClients + id)
   }
 }
