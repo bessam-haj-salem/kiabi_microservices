@@ -8,7 +8,7 @@ async function bootstrap() {
         transport: microservices_1.Transport.RMQ,
         options: {
             urls: ['amqps://irdvzayl:yl69j2GXNVVUs6RXXdZSJT_T2wmlsYuN@beaver.rmq.cloudamqp.com/irdvzayl'],
-            queue: 'admin_queue',
+            queue: 'product_queue',
             queueOptions: {
                 durable: false,
             },

@@ -25,7 +25,7 @@ ClientModule = __decorate([
                     transport: microservices_1.Transport.RMQ,
                     options: {
                         urls: ['amqps://irdvzayl:yl69j2GXNVVUs6RXXdZSJT_T2wmlsYuN@beaver.rmq.cloudamqp.com/irdvzayl'],
-                        queue: 'main_queue',
+                        queue: 'product_queue',
                         queueOptions: {
                             durable: false
                         },

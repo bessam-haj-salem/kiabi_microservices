@@ -18,25 +18,8 @@ export class ClientController {
   
     @EventPattern('client_created')
     async clientCreated(client: any) {
-        this.clientService.create({
-            id: client.id,
-            raison_social: client.raison_social,
-            num_sirette: client.num_sirette,
-            adresse: client.adresse,
-            email: client.email,
-            telephone: client.telephone
-
-
-
-        })
-
-    }
-    @Post()
-    @EventPattern('client_created')
-    async clientCreate(client: any) {
-        console.log("client created ")
+        console.log("my new client");
         console.log(client)
-        this.count++
         this.clientService.create({
             id: client.id,
             raison_social: client.raison_social,
@@ -48,10 +31,9 @@ export class ClientController {
 
 
         })
-        // return
-        console.log(`the count is ${this.count}`)
 
     }
+   
     @EventPattern('client_updated')
     async clientUpdated(client: any) {
         console.log(client);

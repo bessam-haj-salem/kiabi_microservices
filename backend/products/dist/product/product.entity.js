@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Product = void 0;
+const client_entity_1 = require("../client/client.entity");
 const typeorm_1 = require("typeorm");
 let Product = class Product {
 };
@@ -18,17 +19,33 @@ __decorate([
     __metadata("design:type", Number)
 ], Product.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Product.prototype, "title", void 0);
+    (0, typeorm_1.CreateDateColumn)(),
+    __metadata("design:type", Date)
+], Product.prototype, "created", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)(),
+    __metadata("design:type", Date)
+], Product.prototype, "updated", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Product.prototype, "image", void 0);
+], Product.prototype, "ref_product", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: 0 }),
-    __metadata("design:type", Number)
-], Product.prototype, "likes", void 0);
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Product.prototype, "nom_product", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Product.prototype, "description", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Product.prototype, "price", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(type => client_entity_1.Client, client => client.products),
+    __metadata("design:type", client_entity_1.Client)
+], Product.prototype, "client", void 0);
 Product = __decorate([
     (0, typeorm_1.Entity)('product')
 ], Product);

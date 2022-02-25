@@ -50,12 +50,20 @@ const routes: Routes = [
   {
     path: "user",
     canActivate: [AuthGuard],
-    // component: DashboardComponent,
-    // children: [
-
     loadChildren: () =>
       import("src/app/pages/user/user.module").then(
         (m) => m.UserModule
+      ),
+    data: { preload: true },
+
+   
+  },
+  {
+    path: "produit",
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import("src/app/pages/produits/produits.module").then(
+        (m) => m.ProduitsModule
       ),
     data: { preload: true },
 

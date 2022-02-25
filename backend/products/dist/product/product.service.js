@@ -15,32 +15,70 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const client_entity_1 = require("../client/client.entity");
 const typeorm_2 = require("typeorm");
 const product_entity_1 = require("./product.entity");
 let ProductService = class ProductService {
-    constructor(productRepository) {
+    constructor(productRepository, clientRepository) {
         this.productRepository = productRepository;
+        this.clientRepository = clientRepository;
+        this.connection = (0, typeorm_2.getConnection)();
     }
-    async all() {
-        return this.productRepository.find();
+    ensureOwnerShip(product, clientId) {
+        if (product.client.id !== clientId) {
+            throw new common_1.HttpException('Incorrect client', common_1.HttpStatus.UNAUTHORIZED);
+        }
     }
-    async create(data) {
-        return this.productRepository.save(data);
+    async showAll() {
+        const products = await this.productRepository.find({ relations: ['client'] });
+        return products;
     }
-    async get(id) {
-        return this.productRepository.findOne({ id });
+    async showAll1(clientId) {
+        const products = await this.connection.query(`SELECT ref_product, nom_product, description, price, clientId FROM product WHERE clientId = ${clientId} `);
+        return products;
     }
-    async update(id, data) {
-        return this.productRepository.update(id, data);
+    async create(clientID, data) {
+        const client = await this.clientRepository.findOne({ where: { id: clientID } });
+        console.log("notre client*******");
+        console.log(client);
+        const product = await this.productRepository.create(Object.assign(Object.assign({}, data), { client: client }));
+        const created = await this.productRepository.save(product);
+        return created;
     }
-    async delete(id) {
-        return this.productRepository.delete(id);
+    async read(id) {
+        common_1.Logger.log(id);
+        const product = await this.productRepository.findOne({ where: { id }, relations: ['client'] });
+        if (!product) {
+            throw new common_1.HttpException('Not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        return product;
+    }
+    async update(clientID, data) {
+        let product = await this.productRepository.findOne({ where: { clientID }, relations: ['client'] });
+        common_1.Logger.log(product);
+        if (!product) {
+            throw new common_1.HttpException('Not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        this.ensureOwnerShip(product, clientID);
+        await this.productRepository.update(clientID, data);
+        product = await this.productRepository.findOne({ where: { clientID }, relations: ['client'] });
+        return product;
+    }
+    async destroy(clientID) {
+        const product = await this.productRepository.findOne({ where: { clientID }, relations: ['client'] });
+        if (!product) {
+            throw new common_1.HttpException('Not found', common_1.HttpStatus.NOT_FOUND);
+        }
+        await this.productRepository.delete(clientID);
+        return clientID;
     }
 };
 ProductService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(product_entity_1.Product)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(client_entity_1.Client)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], ProductService);
 exports.ProductService = ProductService;
 //# sourceMappingURL=product.service.js.map

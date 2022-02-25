@@ -16,11 +16,14 @@ export const environment = {
 
   //clients
   urlClients: "http://localhost:8099/clients/",
-  // urlGetClients: "http://localhost:3000/api/clients",
-  // urlClient: "http://localhost:8099/clients/",
-  // urlAddClient: "http://localhost:3000/api/clients",
-  // urlDeleteClient: "http://localhost:3000/api/clients/",
-  // urlUpdateClient: "http://localhost:3000/api/clients/",
+  // urlGetClients: "http://localhost:3000/api/addclients",
+  // urlClient: "http://localhost:3000/clients/",
+  // urlAddClient: "http://localhost:3000/api/clients/add",
+  // urlDeleteClient: "http://localhost:3000/api/clients/delete/",
+  // urlUpdateClient: "http://localhost:3000/api/clients/update/",
+  
+  //produits
+  urlProduits: "http://localhost:8099/products/",
 };
 
 /*

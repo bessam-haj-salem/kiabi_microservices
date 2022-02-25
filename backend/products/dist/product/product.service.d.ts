@@ -1,11 +1,17 @@
+import { Client } from 'src/client/client.entity';
 import { Repository } from 'typeorm';
+import { ProductDTO, ProductRO } from './product.dto';
 import { Product } from './product.entity';
 export declare class ProductService {
-    private readonly productRepository;
-    constructor(productRepository: Repository<Product>);
-    all(): Promise<Product[]>;
-    create(data: any): Promise<Product>;
-    get(id: number): Promise<Product>;
-    update(id: number, data: any): Promise<any>;
-    delete(id: number): Promise<any>;
+    private productRepository;
+    private clientRepository;
+    connection: import("typeorm").Connection;
+    constructor(productRepository: Repository<Product>, clientRepository: Repository<Client>);
+    private ensureOwnerShip;
+    showAll(): Promise<ProductRO[]>;
+    showAll1(clientId: number): Promise<any>;
+    create(clientID: number, data: ProductDTO): Promise<ProductRO>;
+    read(id: number): Promise<ProductRO>;
+    update(clientID: number, data: Partial<ProductDTO>): Promise<ProductRO>;
+    destroy(clientID: number): Promise<number>;
 }

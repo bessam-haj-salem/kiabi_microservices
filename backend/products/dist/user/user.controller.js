@@ -68,7 +68,7 @@ __decorate([
 ], UserController.prototype, "delete", null);
 UserController = __decorate([
     (0, common_1.Controller)('api/users'),
-    __param(1, (0, common_1.Inject)('CLIENT_SERVICE')),
+    __param(1, (0, common_1.Inject)('PRODUCT_SERVICE')),
     __metadata("design:paramtypes", [user_service_1.UserService, microservices_1.ClientProxy])
 ], UserController);
 exports.UserController = UserController;

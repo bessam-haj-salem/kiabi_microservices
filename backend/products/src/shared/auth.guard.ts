@@ -7,7 +7,7 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): Promise<boolean>  {
     const request = context.switchToHttp().getRequest();
-    console.log(request);
+    // console.log(request);
     if(!request.headers.authorization) {
       console.log("not autorized man");
         return false

@@ -9,17 +9,18 @@ import { UserService } from './user.service';
   imports: [TypeOrmModule.forFeature([UserEntity]),
   ClientsModule.register([
     {
-      name: 'CLIENT_SERVICE',
+      name: 'PRODUCT_SERVICE',
       transport: Transport.RMQ,
       options: {
         urls: ['amqps://irdvzayl:yl69j2GXNVVUs6RXXdZSJT_T2wmlsYuN@beaver.rmq.cloudamqp.com/irdvzayl'],
-        queue: 'admin_queue',
+        queue: 'product_queue',
         queueOptions: {
           durable: false
         },
       },
     }
-  ])],
+  ])
+],
   controllers: [UserController],
   providers: [UserService]
 })

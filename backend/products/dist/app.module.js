@@ -11,19 +11,19 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
-const product_module_1 = require("./product/product.module");
 const client_module_1 = require("./client/client.module");
 const user_module_1 = require("./user/user.module");
 const core_1 = require("@nestjs/core");
 const http_error_filter_1 = require("./shared/http.error.filter");
 const logging_interceptor_1 = require("./shared/logging.interceptor");
+const product_module_1 = require("./product/product.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             typeorm_1.TypeOrmModule.forRoot(),
-            product_module_1.ProductModule, client_module_1.ClientModule, user_module_1.UserModule,
+            client_module_1.ClientModule, user_module_1.UserModule, product_module_1.ProductModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService,

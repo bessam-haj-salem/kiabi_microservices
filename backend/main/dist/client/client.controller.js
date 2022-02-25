@@ -24,19 +24,8 @@ let ClientController = class ClientController {
         return this.clientService.all();
     }
     async clientCreated(client) {
-        this.clientService.create({
-            id: client.id,
-            raison_social: client.raison_social,
-            num_sirette: client.num_sirette,
-            adresse: client.adresse,
-            email: client.email,
-            telephone: client.telephone
-        });
-    }
-    async clientCreate(client) {
-        console.log("client created ");
+        console.log("my new client");
         console.log(client);
-        this.count++;
         this.clientService.create({
             id: client.id,
             raison_social: client.raison_social,
@@ -45,7 +34,6 @@ let ClientController = class ClientController {
             email: client.email,
             telephone: client.telephone
         });
-        console.log(`the count is ${this.count}`);
     }
     async clientUpdated(client) {
         console.log(client);
@@ -83,13 +71,6 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ClientController.prototype, "clientCreated", null);
-__decorate([
-    (0, common_1.Post)(),
-    (0, microservices_1.EventPattern)('client_created'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], ClientController.prototype, "clientCreate", null);
 __decorate([
     (0, microservices_1.EventPattern)('client_updated'),
     __metadata("design:type", Function),

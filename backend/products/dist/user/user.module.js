@@ -20,17 +20,18 @@ UserModule = __decorate([
         imports: [typeorm_1.TypeOrmModule.forFeature([user_entity_1.UserEntity]),
             microservices_1.ClientsModule.register([
                 {
-                    name: 'CLIENT_SERVICE',
+                    name: 'PRODUCT_SERVICE',
                     transport: microservices_1.Transport.RMQ,
                     options: {
                         urls: ['amqps://irdvzayl:yl69j2GXNVVUs6RXXdZSJT_T2wmlsYuN@beaver.rmq.cloudamqp.com/irdvzayl'],
-                        queue: 'admin_queue',
+                        queue: 'product_queue',
                         queueOptions: {
                             durable: false
                         },
                     },
                 }
-            ])],
+            ])
+        ],
         controllers: [user_controller_1.UserController],
         providers: [user_service_1.UserService]
     })

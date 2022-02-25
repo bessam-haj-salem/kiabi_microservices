@@ -18,6 +18,17 @@ import { UserService } from './user.service';
           durable: false
         },
       },
+    },
+    {
+      name: 'PRODUCT_SERVICE',
+      transport: Transport.RMQ,
+      options: {
+        urls: ['amqps://irdvzayl:yl69j2GXNVVUs6RXXdZSJT_T2wmlsYuN@beaver.rmq.cloudamqp.com/irdvzayl'],
+        queue: 'product_queue',
+        queueOptions: {
+          durable: false
+        },
+      },
     }
   ])],
   controllers: [UserController],

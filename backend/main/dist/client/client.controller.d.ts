@@ -7,7 +7,6 @@ export declare class ClientController {
     constructor(clientService: ClientService, httpService: HttpService);
     all(): Promise<import("./client.model").Client[]>;
     clientCreated(client: any): Promise<void>;
-    clientCreate(client: any): Promise<void>;
     clientUpdated(client: any): Promise<void>;
     clientDeleted(id: number): Promise<void>;
 }

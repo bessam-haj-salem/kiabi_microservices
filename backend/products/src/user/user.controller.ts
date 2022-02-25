@@ -9,7 +9,7 @@ import { ClientProxy, EventPattern } from '@nestjs/microservices';
 
 @Controller('api/users')
 export class UserController {
-  constructor(private userService: UserService, @Inject('CLIENT_SERVICE') private readonly client: ClientProxy) {}
+  constructor(private userService: UserService, @Inject('PRODUCT_SERVICE') private readonly client: ClientProxy) {}
 
   @Get()
   // @UseGuards(new AuthGuard())

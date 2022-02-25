@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscriber } from 'rxjs';
 import { SubSink } from 'subsink';
 import { ClientService } from '../services/client.service';
 

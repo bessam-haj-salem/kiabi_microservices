@@ -12,7 +12,6 @@ const jwt = require("jsonwebtoken");
 let AuthGuard = class AuthGuard {
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        console.log(request);
         if (!request.headers.authorization) {
             console.log("not autorized man");
             return false;

@@ -9,7 +9,8 @@ import { ClientProxy } from '@nestjs/microservices';
 
 @Controller('api/users')
 export class UserController {
-  constructor(private userService: UserService, @Inject('CLIENT_SERVICE') private readonly client: ClientProxy) {}
+  constructor(private userService: UserService, @Inject('CLIENT_SERVICE') private readonly client: ClientProxy,
+  @Inject('PRODUCT_SERVICE') private readonly client1: ClientProxy) {}
 
   @Get()
   @UseGuards(new AuthGuard())
@@ -32,6 +33,8 @@ export class UserController {
     console.log(data);
     const user = await this.userService.register(data);
     this.client.emit('user_created', user)
+    this.client1.emit('user_created', user)
+
     return user
   }
 

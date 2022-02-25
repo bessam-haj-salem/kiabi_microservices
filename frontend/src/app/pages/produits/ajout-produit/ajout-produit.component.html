@@ -1,0 +1,81 @@
+<form [formGroup]="addForm" (ngSubmit)="onSubmitAdd()" #ref>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="Ref Produit"
+          formControlName="ref_product"
+        />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          id="exampleFormControlInput1"
+          placeholder="Désignation Produit"
+          formControlName="nom_product"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <textarea
+          class="form-control"
+          id="description"
+          rows="3"
+          placeholder="Description"
+          formControlName="description"
+        ></textarea>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          id="price"
+          placeholder="Prix"
+          formControlName="price"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <select
+        
+          class="form-control"
+          aria-label="Default select example"
+          formControlName="clientID"
+        >
+          <option selected>Liste Clients</option>
+          <option *ngFor = "let client of clients" [value]="client.id">{{client.raison_social}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <button
+          type="button"
+          (click)="onSubmitAdd()"
+          class="btn btn-outline-default"
+        >
+          Confirmer
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group"></div>
+    </div>
+  </div>
+</form>

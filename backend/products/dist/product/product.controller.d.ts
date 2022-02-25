@@ -1,14 +1,12 @@
-import { ClientProxy } from '@nestjs/microservices';
-import { Product } from './product.entity';
+import { ProductDTO } from './product.dto';
 import { ProductService } from './product.service';
 export declare class ProductController {
     private productService;
-    private readonly client;
-    constructor(productService: ProductService, client: ClientProxy);
-    all(): Promise<Product[]>;
-    create(title: string, image: string): Promise<Product>;
-    get(id: number): Promise<Product>;
-    update(id: number, title: string, image: string): Promise<Product>;
-    delete(id: number): Promise<void>;
-    like(id: number): Promise<any>;
+    constructor(productService: ProductService);
+    all(): Promise<import("./product.dto").ProductRO[]>;
+    all1(id: number): Promise<any>;
+    create(data: ProductDTO): Promise<import("./product.dto").ProductRO>;
+    get(id: number): Promise<import("./product.dto").ProductRO>;
+    update(id: number, data: ProductDTO): Promise<import("./product.dto").ProductRO>;
+    delete(id: number): Promise<number>;
 }

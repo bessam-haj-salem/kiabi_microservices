@@ -1,10 +1,12 @@
 import { ClientProxy } from '@nestjs/microservices';
 import { ClientDTO } from './client.dto';
 import { ClientService } from './client.service';
+import { HttpService } from '@nestjs/axios';
 export declare class ClientController {
     private clientService;
+    private httpService;
     private readonly client;
-    constructor(clientService: ClientService, client: ClientProxy);
+    constructor(clientService: ClientService, httpService: HttpService, client: ClientProxy);
     all(): Promise<import("./client.dto").ClientRO[]>;
     create(data: ClientDTO): Promise<import("./client.dto").ClientRO>;
     get(id: number): Promise<import("./client.dto").ClientRO>;
