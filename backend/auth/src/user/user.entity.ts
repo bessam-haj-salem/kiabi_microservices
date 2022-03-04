@@ -4,6 +4,7 @@ import * as jwt from 'jsonwebtoken'
 import { response } from "express";
 import { UserRO } from "./user.dto";
 import { IdeaEntity } from "src/idea/idea.entity";
+import { ManagementClient, User } from 'auth0';
 @Entity('user')
 export class UserEntity {
 
@@ -40,8 +41,25 @@ export class UserEntity {
     toResponseObject(showToken:boolean = true):UserRO {
         const {id,created, username, email,password,token} = this
         const responseObject:any  = {id, created, username, email, password}
+        // const authZero = new ManagementClient({
+        //     // 3
+        //     domain: process.env.AUTH0_DOMAIN,
+        //     clientId: process.env.AUTH0_CLIENT_ID,
+        //     clientSecret: process.env.AUTH0_CLIENT_SECRET,
+        //     scope: 'read:users update:users'
+        //   });
+      
+        //   const response = await authZero
+        //     .getUser({ id: req.user.sub }) // 4
+        //     .then((user: User) => {
+        //       return user;
+        //     })
+        //     .catch(err => {
+        //       return err;
+        //     });
+        let newToken = process.env.TOKEN
         if(showToken) {
-            responseObject.token = token
+            responseObject.token = newToken
         }
 
         // if(this.ideas) {

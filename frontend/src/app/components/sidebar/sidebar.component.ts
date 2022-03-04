@@ -39,7 +39,7 @@ export class SidebarComponent implements OnInit {
   }
   preloadBundle(routePath) {
     routePath = routePath.substring(1)
-    console.log(routePath)
+    // console.log(routePath)
     this.preloadOnDemandService.startPreload(routePath)
 
   }

@@ -76,7 +76,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "argon-dashboard-angular:build:development"
+            "browserTarget": "argon-dashboard-angular:build:development",
+            "proxyConfig": "src/proxy.config.json"
             
           },
           "configurations": {

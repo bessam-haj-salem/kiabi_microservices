@@ -24,9 +24,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
  onSubmitLogin() {
    let formValue = this.loginForm.value
-   console.log(formValue)
+  //  console.log(formValue)
    this.subs.sink = this.userService.loginUser(formValue).subscribe(res  => {
-     console.log(res)
+    //  console.log(res)
      sessionStorage.setItem("token", res.token)
      sessionStorage.setItem("user", res.username)
      if(res.token) {

@@ -15,7 +15,7 @@ export class ClientController {
    ) {}
 
   @Get()
-  @UseGuards(new AuthGuard())
+  // @UseGuards(new AuthGuard())
   async all() {
     // this.client.emit('hello','Hello from RabbitMQ')
     let allclients = this.clientService.all();
@@ -26,7 +26,7 @@ export class ClientController {
 
   @Post('add')
   @UsePipes(new ValidationPipe())
-  @UseGuards(new AuthGuard())
+  // @UseGuards(new AuthGuard())
   async create(@Body() data: ClientDTO) {
     console.log("data new client")
     console.log(data)

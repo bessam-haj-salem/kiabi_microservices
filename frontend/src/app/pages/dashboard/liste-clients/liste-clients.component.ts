@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { ApiService } from "src/app/core/services/api.service";
 import { SubSink } from "subsink";
 
 // core components
@@ -28,7 +29,7 @@ export class ListeClientsComponent implements OnInit {
   public clientSelected: Client;
   editForm: FormGroup;
 
-  constructor(private clientService: ClientService, private fb: FormBuilder) {}
+  constructor(private clientService: ClientService, private fb: FormBuilder, private apiService:ApiService) {}
 
   ngOnInit() {
     this.listClient();
@@ -41,7 +42,7 @@ export class ListeClientsComponent implements OnInit {
     });
     // console.log(isDevMode());
   }
-  listClient() {
+ async listClient() {
     this.subs.sink = this.clientService
       .getClients()
       .subscribe((clients: any) => {
@@ -53,6 +54,11 @@ export class ListeClientsComponent implements OnInit {
           this.clients = clients;
         }
       });
+    this.subs.sink =  this.apiService.getWeather().subscribe(res => {
+      console.log("***************weather is here**************")
+      // const data =  res.json();
+      console.log(res)
+    })
   }
   // this.datasets = [
   //   [0, 20, 10, 30, 15, 40, 20, 60, 60],

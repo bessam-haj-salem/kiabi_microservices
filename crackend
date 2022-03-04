@@ -17,7 +17,7 @@ krakend run -c /etc/krakend/krakend.json -d
 
 en cas de problem:
 // copy
-cp krakend.json  krakend.json.save-24-02-2022-09h46
+cp krakend.json  krakend.json.save-04-03-2022-09h59
 
 
 

@@ -22,7 +22,7 @@ export class ProductController {
      return product
 
   }
-
+   
   @Get(':id')
   async get(@Param('id') id:number ){
       return this.productService.get(id)

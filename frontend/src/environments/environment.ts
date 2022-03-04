@@ -7,12 +7,14 @@ export const environment = {
   // users
   urlUsers: "http://localhost:8099/users/",
   urlUserLogin: "http://localhost:8099/users/login",
-
   // urlGetUsers: "http://localhost:4000/api/users",
   // urlAddUser: "http://localhost:4000/api/users/register",
   // urlDeleteUser: "http://localhost:4000/api/users/delete/",
   // urlUpdateUser: "http://localhost:4000/api/users/update/",
   // urlLoginUser: "http://localhost:4000/api/users/login",
+  // API
+  urlApiWeather: "/data/2.5/weather?lat=36.720077&lon=9.187480&appid=a8c9d3733c5e4c09699942fb318cd288",
+  urlApiCrackend: "http://localhost:8099/api",
 
   //clients
   urlClients: "http://localhost:8099/clients/",

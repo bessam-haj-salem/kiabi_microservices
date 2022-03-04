@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "12.1.2",
     "@angular/router": "12.1.2",
     "@ng-bootstrap/ng-bootstrap": "10.0.0",
+    "axios": "^0.26.0",
     "bootstrap": "^4.5.2",
     "chart.js": "2.9.3",
     "clipboard": "2.0.6",

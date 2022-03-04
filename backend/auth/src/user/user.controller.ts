@@ -5,6 +5,7 @@ import {ValidationPipe} from "../shared/validation.pipe"
 import { AuthGuard } from '../shared/auth.guard';
 import { User } from './user.decorator';
 import { ClientProxy } from '@nestjs/microservices';
+import 'dotenv/config' 
 
 
 @Controller('api/users')
@@ -13,7 +14,7 @@ export class UserController {
   @Inject('PRODUCT_SERVICE') private readonly client1: ClientProxy) {}
 
   @Get()
-  @UseGuards(new AuthGuard())
+  // @UseGuards(new AuthGuard())
   showAllUsers(@User('username') user) {
       console.log(user)
     return this.userService.showAll();

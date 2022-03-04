@@ -31,6 +31,15 @@ export class UserController {
     // this.client.emit('user_created', user)
     return newuser
   }
+
+  // user consumed from rabbitmq krakend
+  // @EventPattern('Zaama')
+  // async create( user) {
+  //   console.log("***********newuser")
+  //    console.log(user);
+
+  // }
+
   @EventPattern('user_updated')
   async updateIdea(user:any){
         console.log(user);

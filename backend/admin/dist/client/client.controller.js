@@ -70,7 +70,6 @@ let ClientController = class ClientController {
 };
 __decorate([
     (0, common_1.Get)(),
-    (0, common_1.UseGuards)(new auth_guard_1.AuthGuard()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
@@ -78,7 +77,6 @@ __decorate([
 __decorate([
     (0, common_1.Post)('add'),
     (0, common_1.UsePipes)(new validation_pipe_1.ValidationPipe()),
-    (0, common_1.UseGuards)(new auth_guard_1.AuthGuard()),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [client_dto_1.ClientDTO]),
