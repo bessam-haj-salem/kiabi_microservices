@@ -7,3 +7,7 @@
 .editFont {
     color:black
 }
+
+.example-margin {
+    margin: 150px auto;
+  }

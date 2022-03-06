@@ -7,7 +7,7 @@ import { SubSink } from "subsink";
 
 import { Client } from "../models/Client.model";
 import { ClientService } from "../services/client.service";
-
+import {ThemePalette} from '@angular/material/core';
 @Component({
   selector: "app-liste-clients",
   templateUrl: "./liste-clients.component.html",
@@ -15,7 +15,9 @@ import { ClientService } from "../services/client.service";
 })
 export class ListeClientsComponent implements OnInit {
   private subs = new SubSink();
+  public color:ThemePalette = "primary"
   clients: Client[] = [];
+  public loading:boolean = false
   private idClient: number;
   public datasets: any;
   public data: any;
@@ -43,9 +45,11 @@ export class ListeClientsComponent implements OnInit {
     // console.log(isDevMode());
   }
  async listClient() {
+   this.loading = true
     this.subs.sink = this.clientService
       .getClients()
       .subscribe((clients: any) => {
+        this.loading = false
       console.log(clients)
         if (clients.collection != undefined) {
           
