@@ -13,7 +13,7 @@ export class ApiService {
 
 
   constructor(private http: HttpClient) {
-    this.urlApiWeather = environment.urlApiWeather
+    // this.urlApiWeather = environment.urlApiWeather
     this.urlApiCrackend = environment.urlApiCrackend
 
    }

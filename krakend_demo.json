@@ -34,14 +34,14 @@
           "clientMaxRate": 5,
           "strategy": "ip"
         },
-       
+
         "github.com/devopsfaith/krakend-jose/validator": {
           "alg": "RS256",
           "audience": ["nestjs-api"],
-          "jwk-url": "https://dev-ltw8h3ds.us.auth0.com/.well-known/jwks.json"
-      }
+          "jwk-url": "https://{your_domain}.us.auth0.com/.well-known/jwks.json"
+        }
       },
-      
+
       "backend": [
         {
           "encoding": "json-collection",
@@ -289,7 +289,7 @@
       "backend": [
         {
           "encoding": "json-collection",
-          "url_pattern": "/data/2.5/weather?lat=36.720077&lon=9.187480&appid=a8c9d3733c5e4c09699942fb318cd288",
+          "url_pattern": "{your_weather_domain}",
 
           "method": "GET",
           "host": ["http://api.openweathermap.org"]
@@ -314,7 +314,7 @@
               "routing_key": "Route"
             }
           },
-          "host": ["amqps://irdvzayl:yl69j2GXNVVUs6RXXdZSJT_T2wmlsYuN@beaver.rmq.cloudamqp.com/irdvzayl"],
+          "host": ["amqps://{your_domain}.rmq.cloudamqp.com/account"],
           "disable_host_sanitize": true
         }
       ]
@@ -336,7 +336,7 @@
               "prefetch_count": 10
             }
           },
-          "host": ["amqps://irdvzayl:yl69j2GXNVVUs6RXXdZSJT_T2wmlsYuN@beaver.rmq.cloudamqp.com/irdvzayl"],
+          "host": ["amqps://{your_domain}.rmq.cloudamqp.com/account"],
           "disable_host_sanitize": true
         }
       ]
