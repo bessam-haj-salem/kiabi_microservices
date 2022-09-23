@@ -1,14 +1,8 @@
-::ng-deep .bg-gradient-danger {
-    background: linear-gradient(
-87deg
-, #5f36f5 0, #3672f5 100%) !important;
-}
-
 .center {
     height: 100vh;
-    min-width: 400vh;
+    //  min-width: 400vh;
     display: flex;
-    margin-left: 50% ;
+    // margin-left: 50rem ;
     justify-content:center;
     align-items: center;
     background: #000;

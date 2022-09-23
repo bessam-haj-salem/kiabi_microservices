@@ -13,6 +13,7 @@ import { SubSink } from 'subsink';
 export class LoginComponent implements OnInit, OnDestroy {
   private subs = new SubSink()
   loginForm: FormGroup
+  public waiting:boolean = false
   constructor(private userService:UserService, private fb:FormBuilder,private router: Router) {}
 
   ngOnInit() {
@@ -23,12 +24,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   }
  onSubmitLogin() {
+   this.waiting = true
    let formValue = this.loginForm.value
   //  console.log(formValue)
    this.subs.sink = this.userService.loginUser(formValue).subscribe(res  => {
-    //  console.log(res)
+
+     this.waiting = false
+     console.log(res)
      sessionStorage.setItem("token", res.token)
-     sessionStorage.setItem("user", res.username)
+     sessionStorage.setItem("user", res.user.username)
      if(res.token) {
       this.router.navigate(['user'])
      }

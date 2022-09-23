@@ -18,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
    
       // console.log(request)
       let token = sessionStorage.getItem("token")
- console.log(token)
+//  console.log(token)
     let modifiedReq = request.clone({
       
       headers: new HttpHeaders({  "Authorization": `Bearer ${token}`}),

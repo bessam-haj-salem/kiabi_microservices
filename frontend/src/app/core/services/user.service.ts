@@ -43,7 +43,7 @@ export class UserService {
      return this.http.put<User>(this.urlUsers + data.id, data)
    }
    loginUser(data) {
-    return this.http.post<LoginResponse>(this.urlUserLogin , data)
+    return this.http.post<any>(this.urlUserLogin , data)
    }
 
 }

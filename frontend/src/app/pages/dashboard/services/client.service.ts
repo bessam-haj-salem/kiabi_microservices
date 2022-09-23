@@ -11,6 +11,7 @@ export class ClientService {
   // urlGetClients: string
   // urlAddClient: string
   urlClients: string
+  urlAddRabbit: string
   // urlUpdateClient: string
 
   // urlDeleteClient:string
@@ -19,6 +20,7 @@ export class ClientService {
     // this.urlGetClients = environment.urlGetClients
     // this.urlAddClient = environment.urlAddClient
     this.urlClients = environment.urlClients
+    this.urlAddRabbit = environment.urlAddRabbit
 
     // this.urlDeleteClient = environment.urlDeleteClient
     // this.urlUpdateClient = environment.urlUpdateClient
@@ -42,4 +44,7 @@ export class ClientService {
   deleteClient(id) {
     return this.http.delete<any>(this.urlClients + id)
   }
+  addRabbit(data) {
+    return this.http.post<Client>(this.urlAddRabbit, data)
+  }d
 }

@@ -14,6 +14,8 @@ export const environment = {
   // urlLoginUser: "http://localhost:4000/api/users/login",
   // API
   urlApiCrackend: "http://localhost:8099/api",
+  urlAddRabbit: "http://localhost:8099/clients/produce",
+
 
   //clients
   urlClients: "http://localhost:8099/clients/",

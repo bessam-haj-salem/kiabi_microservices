@@ -11,3 +11,9 @@
 .example-margin {
     margin: 150px auto;
   }
+
+  .search {
+    font-size: 20px;
+    margin:10px;
+    color: #fff
+  }

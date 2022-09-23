@@ -112,12 +112,28 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="container-fluid">
+          <div class="row mt-5">
+            <div class="col-xl-4">
+              <div class="search">Search</div>
+              <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="clientFilter"
+              (ngModelChange) = "filterChange($event)"
+            />
+            </div>
+             
+            
+          </div>
+        </div> 
+      </div>
     </div>
   </div>
 </div>
-<mat-spinner class="example-margin" [color]="color" *ngIf="loading"> </mat-spinner>
 
-<div class="container-fluid mt--7" *ngIf="!loading">
+<div class="container-fluid mt--7" >
   <div class="row mt-5">
     <div class="col-xl-11 mb-5 mb-xl-0">
       <div class="card shadow">
@@ -128,6 +144,7 @@
               <h3 class="mb-0" *ngIf="boolAddForm">Ajouter Entreprise</h3>
               <h3 class="mb-0" *ngIf="boolEditForm">Editer Entreprise</h3>
             </div>
+           
             <div class="col text-right">
               <a
                 (click)="openAddForm()"
@@ -146,7 +163,8 @@
         </div>
         <div class="table-responsive" *ngIf="boolTablesForm">
           <!-- Projects table -->
-          <table
+          <ng-container *ngIf="filteredClients$ | async as clients">
+            <table
             class="table align-items-center table-flush"
             *ngIf="boolListForm"
           >
@@ -198,6 +216,8 @@
               </tr>
             </tbody>
           </table>
+          </ng-container>
+          
           <form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()">
             <table
               class="table align-items-center table-flush"
@@ -298,3 +318,9 @@
     </div>
   </div>
 </div>
+
+<ng-template #loading>
+  <mat-spinner class="example-margin" [color]="color" > </mat-spinner>
+
+
+</ng-template>
