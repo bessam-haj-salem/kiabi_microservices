@@ -1,0 +1,98 @@
+
+https://sequelize.org/v3/api/datatypes/
+
+
+
+STRING() A variable length string. Default length 255
+
+CHAR() A fixed length string. Default length 255
+
+TEXT() 
+An (un)limited length text column. Available lengths: tiny, medium, long
+
+INTEGER()
+Available properties: UNSIGNED, ZEROFILL
+
+BIGINT()
+
+
+FLOAT()
+
+REAL()
+
+DOUBLE()
+
+DECIMAL()
+
+BOOLEAN()
+
+
+TIME()
+
+DATE() A datetime column
+
+
+DATEONLY() A date only column
+
+HSTORE()  A key / value column. Only available in postgres.
+
+
+JSON()   A JSON string column. Only available in postgres
+ 
+ 
+JSONB()  A pre-processed JSON data column. Only available in postgres.
+
+
+NOW()  A default value of the current timestamp
+
+
+BLOB()  Binary storage. Available lengths: tiny, medium, long
+
+RANGE() Range types are data types representing a range of values of some element type (called the range's subtype). Only available in postgres. See {@link http://www.postgresql.org/docs/9.4/static/rangetypes.html|Postgres documentation} for more details
+
+UUID()  A column storing a unique universal identifier. Use with UUIDV1 or UUIDV4 for default values.
+
+
+VIRTUAL() A virtual value that is not stored in the DB. This could for example be useful if you want to provide a default value in your model that is returned to the user but not stored in the DB.
+
+You could also use it to validate a value before permuting and storing it. Checking password length before hashing it for example:
+
+sequelize.define('user', {
+  password_hash: DataTypes.STRING,
+  password: {
+    type: DataTypes.VIRTUAL,
+    set: function (val) {
+       this.setDataValue('password', val); // Remember to set the data value, otherwise it won't be validated
+       this.setDataValue('password_hash', this.salt + val);
+     },
+     validate: {
+        isLongEnough: function (val) {
+          if (val.length < 7) {
+            throw new Error("Please choose a longer password")
+         }
+      }
+    }
+  }
+})
+
+
+ENUM()  An enumeration. DataTypes.ENUM('value', 'another value').
+
+ARRAY() An array of type, e.g. DataTypes.ARRAY(DataTypes.DECIMAL). Only available in postgres.
+
+
+GEOMETRY()
+
+
+GEOGRAPHY()
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 import { HttpService } from '@nestjs/axios';
-import { Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
-import { EventPattern } from '@nestjs/microservices';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { EventPattern, MessagePattern } from '@nestjs/microservices';
 import { ClientService } from './client.service';
 
 @Controller('clients')
@@ -11,16 +11,22 @@ export class ClientController {
 
     @Get()
     async all() {
-        
-        return this.clientService.all()
+      
+            return this.clientService.all()
+          
+      
+       
     }
-
   
     @EventPattern('client_created')
-    async clientCreated(client: any) {
+    async clientCreated(client) {
         console.log("my new client");
         console.log(client)
-        this.clientService.create({
+    //     this.httpService.get(`http://localhost:8099/clients/consume`).subscribe(
+    //    client =>  {
+    //      console.log("**************new client");
+    //      console.log(client)
+         this.clientService.create({
             id: client.id,
             raison_social: client.raison_social,
             num_sirette: client.num_sirette,
@@ -31,11 +37,15 @@ export class ClientController {
 
 
         })
+    //    }
+    //  )
+        
 
     }
    
     @EventPattern('client_updated')
     async clientUpdated(client: any) {
+        console.log("********mynew client");
         console.log(client);
         const updatedclient = await this.clientService.findOne(client.id)
         if(updatedclient) {

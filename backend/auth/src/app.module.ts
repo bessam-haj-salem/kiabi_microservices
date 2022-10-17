@@ -9,7 +9,7 @@ import { LogginInterceptor } from './shared/logging.interceptor';
 import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), IdeaModule, UserModule],
+  imports: [TypeOrmModule.forRoot(), UserModule],
   controllers: [AppController],
   providers: [
     AppService,

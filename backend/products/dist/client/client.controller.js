@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_guard_1 = require("../shared/auth.guard");
-const client_dto_1 = require("./client.dto");
 const client_service_1 = require("./client.service");
 let ClientController = class ClientController {
     constructor(clientService) {
@@ -35,6 +34,8 @@ let ClientController = class ClientController {
         return this.clientService.get(id);
     }
     async update(id, data) {
+        console.log(id);
+        console.log(data);
         await this.clientService.update(id, data);
         const newclient = await this.clientService.get(id);
         return newclient;
@@ -70,8 +71,9 @@ __decorate([
 __decorate([
     (0, common_1.Put)('edit/:id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, client_dto_1.ClientDTO]),
+    __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", Promise)
 ], ClientController.prototype, "update", null);
 __decorate([

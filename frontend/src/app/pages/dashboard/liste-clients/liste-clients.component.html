@@ -118,24 +118,22 @@
             <div class="col-xl-4">
               <div class="search">Search</div>
               <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="clientFilter"
-              (ngModelChange) = "filterChange($event)"
-            />
+                type="text"
+                class="form-control"
+                [(ngModel)]="clientFilter"
+                (ngModelChange)="filterChange($event)"
+              />
             </div>
-             
-            
           </div>
-        </div> 
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container-fluid mt--7" >
+<div class="container-fluid mt--7">
   <div class="row mt-5">
-    <div class="col-xl-11 mb-5 mb-xl-0">
+    <div class="col-xl-11 mb-5 mb-xl-4">
       <div class="card shadow">
         <div class="card-header border-0">
           <div class="row align-items-center">
@@ -144,7 +142,7 @@
               <h3 class="mb-0" *ngIf="boolAddForm">Ajouter Entreprise</h3>
               <h3 class="mb-0" *ngIf="boolEditForm">Editer Entreprise</h3>
             </div>
-           
+
             <div class="col text-right">
               <a
                 (click)="openAddForm()"
@@ -165,67 +163,12 @@
           <!-- Projects table -->
           <ng-container *ngIf="filteredClients$ | async as clients">
             <table
-            class="table align-items-center table-flush"
-            *ngIf="boolListForm"
-          >
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Id</th>
-
-                <th scope="col">Raison Sociale</th>
-                <th scope="col">N° Sirette</th>
-                <th scope="col">Adresse</th>
-                <th scope="col">Email</th>
-                <th scope="col">Téléphone</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let client of clients">
-                <th scope="row">
-                  {{ client.id }}
-                </th>
-                <td>
-                  {{ client.raison_social }}
-                </td>
-                <td>
-                  {{ client.num_sirette }}
-                </td>
-                <!-- <td>
-                  <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
-                </td> -->
-                <td>{{ client.adresse }}</td>
-                <td>{{ client.email }}</td>
-                <td>{{ client.telephone }}</td>
-                <td>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-success"
-                    (click)="updateClient(client.id)"
-                  >
-                    Editer
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-danger"
-                    (click)="deleteClient(client.id)"
-                  >
-                    Effacer
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          </ng-container>
-          
-          <form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()">
-            <table
               class="table align-items-center table-flush"
-              *ngIf="boolEditForm"
+              *ngIf="boolListForm"
             >
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">Id</th>
+                  <!-- <th scope="col">Id</th> -->
 
                   <th scope="col">Raison Sociale</th>
                   <th scope="col">N° Sirette</th>
@@ -235,77 +178,132 @@
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
-
               <tbody>
-                <tr>
-                  <th scope="row">
-                    {{ clientSelected.id }}
-                  </th>
+                <tr *ngFor="let client of clients">
+                  <!-- <th scope="row">
+                    {{ client.id }}
+                  </th> -->
                   <td>
-                    <input
-                      type="raison_social"
-                      class="form-control editFont"
-                      id="exampleFormControlInput1"
-                      placeholder="raison social"
-                      formControlName="raison_social"
-                      [(ngModel)]="clientSelected.raison_social"
-                    />
+                    {{ client.raison_social }}
                   </td>
                   <td>
-                    <input
-                      type="num_sirette"
-                      class="form-control editFont"
-                      id="exampleFormControlInput1"
-                      placeholder="N° Sirette"
-                      formControlName="num_sirette"
-                      [(ngModel)]="clientSelected.num_sirette"
-                    />
+                    {{ client.num_sirette }}
                   </td>
                   <!-- <td>
                   <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
                 </td> -->
-                  <td>
-                    <input
-                      type="adresse"
-                      class="form-control editFont"
-                      id="exampleFormControlInput1"
-                      placeholder="Adresse"
-                      formControlName="adresse"
-                      [(ngModel)]="clientSelected.adresse"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="email"
-                      class="form-control editFont"
-                      id="exampleFormControlInput1"
-                      placeholder="nom@example.com"
-                      formControlName="email"
-                      [(ngModel)]="clientSelected.email"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="telephone"
-                      class="form-control editFont"
-                      id="exampleFormControlInput1"
-                      placeholder="Téléphone"
-                      formControlName="telephone"
-                      [(ngModel)]="clientSelected.telephone"
-                    />
-                  </td>
+                  <td>{{ client.adresse }}</td>
+                  <td>{{ client.email }}</td>
+                  <td>{{ client.telephone }}</td>
                   <td>
                     <button
                       type="button"
-                      class="btn btn-outline-default"
-                      (click)="onSubmitEdit()"
+                      class="btn btn-sm btn-outline-success"
+                      (click)="updateClient(client)"
                     >
-                      Confirmer
+                      Editer
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="deleteClient(client.id)"
+                    >
+                      Effacer
                     </button>
                   </td>
                 </tr>
               </tbody>
             </table>
+          </ng-container>
+
+          <form [formGroup]="editForm" (ngSubmit)="onSubmitEdit()">
+            <ng-container *ngIf="clientSelected$ | async as clientSelected">
+              <table
+                class="table align-items-center table-flush"
+                *ngIf="boolEditForm"
+              >
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Id</th>
+
+                    <th scope="col">Raison Sociale</th>
+                    <th scope="col">N° Sirette</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      {{ clientSelected.id }}
+                    </th>
+                    <td>
+                      <input
+                        type="raison_social"
+                        class="form-control editFont"
+                        id="exampleFormControlInput1"
+                        placeholder="raison social"
+                        formControlName="raison_social"
+                        [(ngModel)]="clientSelected.raison_social"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="num_sirette"
+                        class="form-control editFont"
+                        id="exampleFormControlInput1"
+                        placeholder="N° Sirette"
+                        formControlName="num_sirette"
+                        [(ngModel)]="clientSelected.num_sirette"
+                      />
+                    </td>
+
+                    <td>
+                      <input
+                        type="adresse"
+                        class="form-control editFont"
+                        id="exampleFormControlInput1"
+                        placeholder="Adresse"
+                        formControlName="adresse"
+                        [(ngModel)]="clientSelected.adresse"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="email"
+                        class="form-control editFont"
+                        id="exampleFormControlInput1"
+                        placeholder="nom@example.com"
+                        formControlName="email"
+                        [(ngModel)]="clientSelected.email"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="telephone"
+                        class="form-control editFont"
+                        id="exampleFormControlInput1"
+                        placeholder="Téléphone"
+                        formControlName="telephone"
+                        [(ngModel)]="clientSelected.telephone"
+                      />
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-outline-default"
+                        (click)="onSubmitEdit()"
+                      >
+                        Confirmer
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-container>
           </form>
         </div>
         <div style="margin: 10px">
@@ -320,7 +318,5 @@
 </div>
 
 <ng-template #loading>
-  <mat-spinner class="example-margin" [color]="color" > </mat-spinner>
-
-
+  <mat-spinner class="example-margin" [color]="color"> </mat-spinner>
 </ng-template>

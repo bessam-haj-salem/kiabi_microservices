@@ -20,11 +20,11 @@ export class ClientService {
 
   async create(data): Promise<Client> {
     this.count++;
-    if (this.count === 1) {
+    // if (this.count === 1) {
       console.log('connection closed');
 
       return new this.clientModel(data).save();
-    }
+    // }
   }
   async findOne(id: number): Promise<Client> {
     try {

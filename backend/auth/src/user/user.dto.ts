@@ -8,6 +8,8 @@ export class UserDTO {
   password: string;
 
   email: string;
+
+  
 }
 
 export class UserRO {

@@ -1,0 +1,31 @@
+INSERT INTO pays (code, nom) VALUES('TUNI', 'Tunisie');
+
+INSERT INTO ville (nom_ville, act, lang, ord, country_id)  VALUES ('Tunis', 112, 'arabe', 121, 2)
+
+INSERT INTO agence (nom_agence, logo, telephone_fixe, portable, fax, email, id_ville, code_postal, adresse, login, password, salt, marge, type_operation, marge_affichage, cumul_reservation, total_solde, cumul_reservation_solde, decouvert, devise, tva) VALUES('90Travel Sousse', 'DFGD','7365465','9846555','73164666','travel@gmail.com',3, 2165, 'rue des oliviers','FGFDGFGD','FDSFSDFS','FSDFSDfds',0.2,12,0.1,12,1258,123.3,120,'TND',0.18);
+
+INSERT INTO hotel (ville_id, name, address, description, stars, email1, fax1, phone_number1, email2,fax2, phone_number2,position) VALUES (3, 'Regency', 'rue du Lac', 'hotel de luxe',5, 'regency@gmail.com','71225222','724546546','regency1@gmail.com','71244545','215445545','centre ville') ;
+
+INSERT INTO client (type_client, raison_social_entreprise, adresse_entreprise, rne, email_entreprise, logo_entreprise, telephone_fixe_entreprise, fax_entreprise, nom_personne_encharge_entreprise, tel_personne_encharge_entreprise, nom_particulier, prenom_particulier, email_particulier, telephone_particulier, num_identite_particulier) VALUES('divers',NULL, NULL,NULL,NULL, NULL, NULL,NULL,NULL,NULL,NULL, NULL,NULL,NULL,NULL);
+
+
+ INSERT INTO client_entreprise (type_client,raison_social_entreprise, adresse_entreprise, rne, email_entreprise, logo_entreprise, telephone_fixe_entreprise, fax_entreprise, nom_personne_encharge_entreprise, tel_personne_encharge_entreprise, code_client) VALUES('entreprise','Fantasia', 'rue des fleurs Sousse','DSGGGFG','fanta@gmail.com', 'SDGGSDG', '7255465','721654654','Salah Ben salah','25145545', '444455');
+
+INSERT INTO client (type_client, raison_social_entreprise, adresse_entreprise, rne, email_entreprise, logo_entreprise, telephone_fixe_entreprise, fax_entreprise, nom_personne_encharge_entreprise, tel_personne_encharge_entreprise, nom_particulier, prenom_particulier, email_particulier, telephone_particulier, num_identite_particulier) VALUES('particulier',NULL, NULL,NULL,NULL, NULL, NULL,NULL,NULL,NULL,'Tounsi', 'Karim','karim@gmail.com','2511122','061215478');
+
+
+INSERT INTO fournisseur (raison_social_entreprise, adresse_entreprise, rne, email_entreprise, logo_entreprise, telephone_fixe_entreprise, fax_entreprise, nom_personne_encharge_entreprise, tel_personne_encharge_entreprise) VALUES('TravelTodo', 'rue des fleurs Tunis','DSGGGFG','todo@gmail.com', 'SDGGSDG', '7255465','721654654','Salah Ben hmida','25145545');
+
+
+INSERT INTO booking(reference, id_session, date_cmd, id_hotel, id_agence, id_client, id_fournisseur, date_from,date_to, nb_suits, nb_adult, nb_enfants, nb_chambres, montant_total,montant_affichage, observation, frais_annulation, status, date_confirmation, date_annulation, rmqs, mode_paiement, pourcent_montant, montant_restant, montant_a_payer, source, bookingrefbooster, secondrefbooster) VALUES ('45875455', NULL, '2021-05-10', 1,3,5,1,'2021-05-11','2021-05-15', NULL, 3, 2,3,1200,1250,NULL,NULL,'confirmer','2021-05-10',NULL,NULL,'virement', NULL, 465,445,NULL,NULL,NULL);
+
+INSERT INTO factures (client_id, date_facture, num_facture, montant_facture_ttc, mt_tva,hotel_id,date_arrive,date_depart, nb_suits,nb_chambres,nb_adult, nb_enfants, designation, pied_page )  VALUES (1, '2021-05-10', '785725275','1000', '190',1,'2021-05-10', '2021-05-15', NULL, 3, 3,2, NULL,NULL   );
+
+INSERT INTO factures (client_id, date_facture, num_facture, montant_facture_ttc, mt_tva,hotel_id,date_arrive,date_depart, nb_suits,nb_chambres,nb_adult, nb_enfants, designation, pied_page )  VALUES (1, '2021-05-10', '785725275','1000', '190',1,'2021-05-10', '2021-05-15', NULL, 3, 3,2, NULL,NULL   );
+
+INSERT INTO supplements (facture_id, nom, date_debut, date_fin, prix_adult,prix_enfant,marge )  VALUES (4, 'Transfers', '2021-05-10', '2021-05-10','100', '50','0.20' );
+
+INSERT INTO devis (client_id, date_devis,date_expiration,  num_devis, utilisateur, condition_paiement )  VALUES (1, '2021-05-10', '2021-05-25','545GF', 'amine@gmail.com', '50% avance' );
+INSERT INTO articles (designation, prix_unitaire, taux_tva, reference) VALUES ('salle à manger', 2000, 0.18, '121DFSDf');
+INSERT INTO devis_articles (devis_id, article_id, quantite) VALUES (1, 1,2);
+INSERT INTO articles (designation, prix_unitaire,taux_tva,  reference )  VALUES ('pc portable dell', 3500, 0.18,'2867DELL' );

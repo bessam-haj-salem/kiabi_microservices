@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SubSink } from 'subsink';
 import { ClientService } from '../services/client.service';
@@ -6,12 +6,14 @@ import { ClientService } from '../services/client.service';
 @Component({
   selector: 'app-ajout-client',
   templateUrl: './ajout-client.component.html',
-  styleUrls: ['./ajout-client.component.css']
+  styleUrls: ['./ajout-client.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AjoutClientComponent implements OnInit, OnDestroy {
   @Output() addEvent = new EventEmitter<string>()
   addForm: FormGroup
   private subs = new SubSink()
+  
 
   constructor(private fb: FormBuilder, private clientService: ClientService) { }
 
@@ -25,13 +27,16 @@ export class AjoutClientComponent implements OnInit, OnDestroy {
 
 
     })
+   
   }
 onSubmitAdd() {
   let formValue = this.addForm.value
   console.log(formValue);
   this.subs.sink = this.clientService.addClient(formValue).subscribe(res => {
+    console.log(formValue)
+    this.clientService.insertClient(formValue)
     this.addForm.reset()
-    this.addEvent.emit("reload")
+    // this.addEvent.emit("reload")
     
     console.log(res);
   })

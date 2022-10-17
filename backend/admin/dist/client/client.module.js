@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientModule = void 0;
-const axios_1 = require("@nestjs/axios");
 const common_1 = require("@nestjs/common");
 const microservices_1 = require("@nestjs/microservices");
 const typeorm_1 = require("@nestjs/typeorm");
@@ -20,7 +19,6 @@ ClientModule = __decorate([
     (0, common_1.Module)({
         imports: [
             typeorm_1.TypeOrmModule.forFeature([client_entity_1.Client]),
-            axios_1.HttpModule,
             microservices_1.ClientsModule.register([
                 {
                     name: 'CLIENT_SERVICE',

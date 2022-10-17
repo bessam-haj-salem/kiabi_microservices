@@ -35,10 +35,12 @@ export class ClientController {
       return this.clientService.get(id)
   }
 
-  @Put('edit/:id')
   // @UsePipes(new ValidationPipe())
   // @UseGuards(new AuthGuard())
-  async update(@Param('id') id:number, data: ClientDTO) {
+  @Put('edit/:id')
+  async update(@Param('id') id:number, @Body() data:any) {
+    console.log(id);
+    console.log(data)
    await this.clientService.update(id, data )
    const newclient = await this.clientService.get(id)
    return newclient

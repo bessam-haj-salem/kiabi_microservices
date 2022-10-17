@@ -1,0 +1,6 @@
+
+SELECT client.type_client,booking.id, booking.id_client, booking.id_fournisseur, booking.mode_paiement,booking.montant_total, cheque.statut_cheque FROM client INNER JOIN booking ON client.id = booking.id_client INNER JOIN cheque ON booking.id = cheque.reservation_id WHERE  booking.mode_paiement = 'cheque'
+
+
+
+SELECT cheque.montant_total as montant_cheque, traite.montant_total as montant_traite , virement.montant_total as montant_virement, espece.montant_total as montant_espece , booking.id as reservation_id FROM booking INNER JOIN cheque ON booking.id = cheque.reservation_id INNER JOIN traite ON booking.id = traite.reservation_id INNER JOIN virement ON booking.id = virement.reservation_id INNER JOIN espece ON booking.id = espece.reservation_id WHERE booking.id=9;

@@ -1,0 +1,349 @@
+{
+  "version": 3,
+  "host": ["http://localhost:8080"],
+  "extra_config": {
+    "github_com/devopsfaith/krakend-cors": {
+      "allow_origins": ["*"],
+      "expose_headers": ["Content-Length"],
+      "max_age": "12h",
+      "allow_methods": ["GET", "POST", "PUT", "DELETE"],
+      "allow_headers": [
+        "Content-Type",
+        "Authorization",
+        "Accept",
+        "x-access-token"
+      ],
+      "allow_credentials": true
+    }
+  },
+  "timeout": "20000ms",
+  "cache_ttl": "2s",
+  "name": "api-gateway",
+  "port": 8080,
+
+  "endpoints": [
+    {
+      "endpoint": "/clients/{id}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "GET",
+      "concurrent_calls": 3,
+      "output_encoding": "json-collection",
+      "extra_config": {
+        "github.com/devopsfaith/krakend-ratelimit/juju/router": {
+          "maxRate": 50,
+          "clientMaxRate": 5,
+          "strategy": "ip"
+        },
+
+        "github.com/devopsfaith/krakend-jose/validator": {
+          "alg": "RS256",
+          "audience": ["nestjs-api"],
+          "jwk-url": "https://dev-ltw8h3ds.us.auth0.com/.well-known/jwks.json"
+        }
+      },
+
+      "backend": [
+        {
+          "encoding": "json-collection",
+          "url_pattern": "/api/clients",
+
+          "method": "GET",
+          "host": ["http://localhost:3000", "http://localhost:3001"],
+          "is_collection": "true"
+        }
+      ]
+    },
+
+    {
+      "endpoint": "/clients/{id}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "POST",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "encoding": "json",
+          "url_pattern": "/api/clients/add",
+
+          "method": "POST",
+          "host": ["http://localhost:3000"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/clients/{id}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "PUT",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "encoding": "json",
+          "url_pattern": "/api/clients/edit/{id}",
+
+          "method": "PUT",
+          "host": ["http://localhost:3000"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/clients/{id}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "DELETE",
+      "output_encoding": "string",
+      "backend": [
+        {
+          "encoding": "string",
+          "url_pattern": "/api/clients/delete/{id}",
+
+          "method": "DELETE",
+          "host": ["http://localhost:3000"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/users/get",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "GET",
+      "output_encoding": "json-collection",
+      "extra_config": {
+        "github.com/devopsfaith/krakend-ratelimit/juju/router": {
+          "maxRate": 50,
+          "clientMaxRate": 5,
+          "strategy": "ip"
+        }
+      },
+      "backend": [
+        {
+          "encoding": "json-collection",
+          "url_pattern": "/api/users",
+
+          "method": "GET",
+          "host": ["http://localhost:4000"],
+          "is_collection": "true"
+        }
+      ]
+    },
+    {
+      "endpoint": "/users/{id}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "POST",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "encoding": "json",
+          "url_pattern": "/api/users/register",
+
+          "method": "POST",
+          "host": ["http://localhost:4000"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/users/{id}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "PUT",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "encoding": "json",
+          "url_pattern": "/api/users/update/{id}",
+
+          "method": "PUT",
+          "host": ["http://localhost:4000"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/users/{id}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "DELETE",
+      "output_encoding": "string",
+      "backend": [
+        {
+          "encoding": "string",
+          "url_pattern": "/api/users/delete/{id}",
+
+          "method": "DELETE",
+          "host": ["http://localhost:4000"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/users/login",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "POST",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "encoding": "json",
+          "url_pattern": "/api/users/login",
+
+          "method": "POST",
+          "host": ["http://localhost:4000"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/products/{id}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "GET",
+      "output_encoding": "json-collection",
+      "extra_config": {
+        "github.com/devopsfaith/krakend-ratelimit/juju/router": {
+          "maxRate": 50,
+          "clientMaxRate": 5,
+          "strategy": "ip"
+        }
+      },
+      "backend": [
+        {
+          "encoding": "json-collection",
+          "url_pattern": "/api/products",
+          "extra_config": {
+            "github.com/devopsfaith/krakend-circuitbreaker/gobreaker": {
+              "interval": 60,
+              "timeout": 10,
+              "maxErrors": 1,
+              "name": "cb-allproducts-1",
+              "logStatusChange": true
+            }
+          },
+
+          "method": "GET",
+          "host": ["http://localhost:3002"],
+          "is_collection": "true"
+        }
+      ]
+    },
+    {
+      "endpoint": "/clients/list/{clientId}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "GET",
+      "backend": [
+        {
+          "url_pattern": "/api/clients/{clientId}",
+
+          "host": ["http://localhost:3000"],
+          "extra_config": {
+            "github.com/devopsfaith/krakend/proxy": {
+              "shadow": true
+            }
+          }
+        },
+        {
+          "url_pattern": "/api/products/client/{clientId}",
+
+          "host": ["http://localhost:3002"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/products/{id}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "POST",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "encoding": "json",
+          "url_pattern": "/api/products/add",
+
+          "method": "POST",
+          "host": ["http://localhost:3002"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/products/{id}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "PUT",
+      "output_encoding": "json",
+      "backend": [
+        {
+          "encoding": "json",
+          "url_pattern": "/api/products/edit/{id}",
+
+          "method": "PUT",
+          "host": ["http://localhost:3002"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/products/{id}",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "DELETE",
+      "output_encoding": "string",
+      "backend": [
+        {
+          "encoding": "string",
+          "url_pattern": "/api/products/delete/{id}",
+
+          "method": "DELETE",
+          "host": ["http://localhost:3002"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/api",
+      "headers_to_pass": ["Authorization", "Content-Type", "Accept"],
+      "method": "GET",
+
+      "backend": [
+        {
+          "encoding": "json-collection",
+          "url_pattern": "/data/2.5/weather?lat=36.720077&lon=9.187480&appid=a8c9d3733c5e4c09699942fb318cd288",
+
+          "method": "GET",
+          "host": ["http://api.openweathermap.org"]
+        }
+      ]
+    },
+    {
+      "endpoint": "/produce",
+      "method": "POST",
+      "backend": [
+        {
+          "extra_config": {
+            "github.com/devopsfaith/krakend-amqp/produce": {
+              "exchange": "direct",
+              "durable": true,
+              "delete": false,
+              "exclusive": false,
+              "no_wait": true,
+              "mandatory": true,
+              "immediate": false,
+              "name": "queue-1",
+              "routing_key": "Route"
+            }
+          },
+          "host": [
+            "amqps://irdvzayl:yl69j2GXNVVUs6RXXdZSJT_T2wmlsYuN@beaver.rmq.cloudamqp.com/irdvzayl"
+          ],
+          "disable_host_sanitize": true
+        }
+      ]
+    },
+    {
+      "endpoint": "/consume",
+      "backend": [
+        {
+          "extra_config": {
+            "github.com/devopsfaith/krakend-amqp/consume": {
+              "name": "queue-1",
+              "exchange": "direct",
+              "durable": true,
+              "delete": false,
+              "exclusive": false,
+              "no_wait": true,
+              "no_local": false,
+              "routing_key": "Route",
+              "prefetch_count": 10
+            }
+          },
+          "host": [
+            "amqps://irdvzayl:yl69j2GXNVVUs6RXXdZSJT_T2wmlsYuN@beaver.rmq.cloudamqp.com/irdvzayl"
+          ],
+          "disable_host_sanitize": true
+        }
+      ]
+    }
+  ]
+}

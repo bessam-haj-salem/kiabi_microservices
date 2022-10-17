@@ -1,0 +1,48 @@
+ALTER TABLE 
+ALTER COLUMN id TYPE SERIAL;
+
+//add coulumn :
+ALTER TABLE table_name
+ADD COLUMN new_column_name data_type constraint;
+
+ALTER TABLE booking
+    ADD CONSTRAINT fk_agence FOREIGN KEY (id_agence) REFERENCES hotel (id);
+    
+// add index 
+CREATE UNIQUE INDEX idx_employees_mobile_phone
+ON employees(mobile_phone);  
+
+
+  
+ //remove column :
+ ALTER TABLE table_name 
+DROP COLUMN column_name; 
+
+//remove table :
+DROP TABLE [IF EXISTS] table_name 
+[CASCADE | RESTRICT];
+
+
+//rename column :
+ALTER TABLE table_name 
+RENAME COLUMN column_name TO new_column_name;
+
+//rename table:
+ALTER TABLE table_name
+RENAME TO new_table_name;
+
+//update row :
+UPDATE table_name
+SET column1 = value1,
+    column2 = value2,
+    ...
+WHERE condition;
+
+
+//delete row:
+DELETE FROM table_name
+WHERE condition;
+
+//: add default value
+ALTER TABLE traite  
+ALTER COLUMN sans_provision SET DEFAULT 'non'

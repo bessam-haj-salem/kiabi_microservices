@@ -1,0 +1,76 @@
+
+connect to postgres :
+sudo -i -u postgres
+psql
+
+quit postgres:
+\q
+
+
+create user :
+createuser --interactive
+
+create db :
+createdb dbName
+
+list all db:
+\l
+
+connect to specific db:
+psql -d finance90
+
+
+list all table : 
+\d
+
+describe a table :
+\d+ <table_name>
+
+
+grant privileges to user :
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO bessam2022;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO bessam2022;
+
+
+show data table :
+\x 
+Select * .........
+
+
+backup db:
+sudo su - postgres
+pg_dump postgres > postgres_db.bak
+
+restore db:
+psql empty_database < backup_file
+
+
+********************************reinitialiser table id*********************************************************:
+Syntaxe:
+
+SELECT pg_get_serial_sequence(‘tablename’, ‘ columnname‘);
+Exemple:
+
+SELECT pg_get_serial_sequence('demo', 'autoid');
+La requête doit retourner le nom de la séquence de autoid comme "Demo_autoid_seq"
+Ensuite, utilisez la requête suivante pour réinitialiser l'autoid
+
+Syntaxe:
+
+ALTER SEQUENCE sequenceName RESTART WITH value;
+Exemple:
+
+ALTER SEQUENCE "Demo_autoid_seq" RESTART WITH 1453;
+InformationsquelleAutor vinoth shankar
+2
+Si vous avez une table avec une colonne d'IDENTITÉ que vous souhaitez réinitialiser la valeur suivante pour vous pouvez utiliser la commande suivante:
+
+ALTER TABLE <table name> 
+    ALTER COLUMN <column name> 
+        RESTART WITH <new value to restart with>;
+*********************************************************************************************************************
+        
+        
+        
+        

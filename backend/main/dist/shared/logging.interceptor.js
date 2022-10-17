@@ -12,6 +12,8 @@ const rxjs_1 = require("rxjs");
 let LoggingInterceptor = class LoggingInterceptor {
     intercept(context, next) {
         const req = context.switchToHttp().getRequest();
+        console.log('**********req');
+        console.log(req);
         const method = req.method;
         const url = req.url;
         const now = Date.now();

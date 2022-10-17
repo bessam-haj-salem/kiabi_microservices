@@ -30,10 +30,8 @@ let ClientService = class ClientService {
     }
     async create(data) {
         this.count++;
-        if (this.count === 1) {
-            console.log('connection closed');
-            return new this.clientModel(data).save();
-        }
+        console.log('connection closed');
+        return new this.clientModel(data).save();
     }
     async findOne(id) {
         try {

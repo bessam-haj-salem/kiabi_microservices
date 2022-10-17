@@ -14,31 +14,21 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientController = void 0;
 const common_1 = require("@nestjs/common");
-const microservices_1 = require("@nestjs/microservices");
-const auth_guard_1 = require("../shared/auth.guard");
 const client_dto_1 = require("./client.dto");
 const validation_pipe_1 = require("../shared/validation.pipe");
 const client_service_1 = require("./client.service");
-const axios_1 = require("@nestjs/axios");
 let ClientController = class ClientController {
-    constructor(clientService, httpService, client) {
+    constructor(clientService) {
         this.clientService = clientService;
-        this.httpService = httpService;
-        this.client = client;
     }
     async all() {
         let allclients = this.clientService.all();
-        return this.clientService.all();
+        return allclients;
     }
     async create(data) {
         console.log("data new client");
         console.log(data);
         const client = await this.clientService.create(data);
-        this.client.emit('client_created', client);
-        this.httpService.post(`http://localhost:3002/api/clients/add`, client).subscribe(res => {
-            console.log("**************res");
-            console.log(res);
-        });
         return client;
     }
     async get(id) {
@@ -47,24 +37,16 @@ let ClientController = class ClientController {
         return this.clientService.get(id);
     }
     async update(id, raison_social, num_sirette, adresse, email, telephone) {
+        console.log(raison_social);
         await this.clientService.update(id, { raison_social, num_sirette, adresse, email, telephone });
         const client = await this.clientService.get(id);
-        this.client.emit('client_updated', client);
-        this.httpService.put(`http://localhost:3002/api/clients/edit/${id}`, { raison_social, num_sirette, adresse, email, telephone }).subscribe(res => {
-            console.log("**************res");
-            console.log(res);
-        });
+        console.log(client);
         return client;
     }
     async delete(id) {
         console.log(" id to delete");
         console.log(id);
         await this.clientService.delete(id);
-        this.client.emit('client_deleted', id);
-        this.httpService.delete(`http://localhost:3002/api/clients/delete/${id}`).subscribe(res => {
-            console.log("**************res");
-            console.log(res);
-        });
         return id;
     }
 };
@@ -92,7 +74,6 @@ __decorate([
 __decorate([
     (0, common_1.Put)('edit/:id'),
     (0, common_1.UsePipes)(new validation_pipe_1.ValidationPipe()),
-    (0, common_1.UseGuards)(new auth_guard_1.AuthGuard()),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)('raison_social')),
     __param(2, (0, common_1.Body)('num_sirette')),
@@ -105,7 +86,6 @@ __decorate([
 ], ClientController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)('delete/:id'),
-    (0, common_1.UseGuards)(new auth_guard_1.AuthGuard()),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -113,9 +93,7 @@ __decorate([
 ], ClientController.prototype, "delete", null);
 ClientController = __decorate([
     (0, common_1.Controller)('clients'),
-    __param(2, (0, common_1.Inject)('CLIENT_SERVICE')),
-    __metadata("design:paramtypes", [client_service_1.ClientService, axios_1.HttpService,
-        microservices_1.ClientProxy])
+    __metadata("design:paramtypes", [client_service_1.ClientService])
 ], ClientController);
 exports.ClientController = ClientController;
 //# sourceMappingURL=client.controller.js.map

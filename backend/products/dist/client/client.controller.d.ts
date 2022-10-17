@@ -1,4 +1,3 @@
-import { ClientDTO } from './client.dto';
 import { ClientService } from './client.service';
 export declare class ClientController {
     private clientService;
@@ -6,6 +5,6 @@ export declare class ClientController {
     all(): Promise<import("./client.dto").ClientRO[]>;
     create(data: any): Promise<import("./client.dto").ClientRO>;
     get(id: number): Promise<import("./client.dto").ClientRO>;
-    update(id: number, data: ClientDTO): Promise<import("./client.dto").ClientRO>;
+    update(id: number, data: any): Promise<import("./client.dto").ClientRO>;
     delete(id: number): Promise<number>;
 }

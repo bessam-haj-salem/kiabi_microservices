@@ -1,0 +1,292 @@
+CREATE TABLE booking(
+	id SERIAL  PRIMARY KEY ,
+	reference varchar(11) ,
+	id_session varchar(50) ,
+	date_cmd date ,
+	id_hotel smallint  ,
+	id_agence smallint  ,
+	id_client smallint,
+	id_fournisseur smallint,
+	date_from date ,
+	date_to date ,
+	nb_suits smallint  ,
+	nb_adult smallint  ,
+	nb_enfants smallint  ,
+	nb_chambres smallint  ,
+	montant_total float ,
+	montant_affichage float ,
+	observation text,
+	frais_annulation float ,
+	status varchar(30) ,
+	date_confirmation timestamp ,
+	date_annulation timestamp ,
+	rmqs text ,
+	mode_paiement varchar(250) ,
+	pourcent_montant float ,
+	montant_restant float ,
+	montant_a_payer float ,
+	source varchar(255) ,
+	bookingRefbooster varchar(255) ,
+	secondRefbooster varchar(255) 
+	
+	);
+	
+	
+	CREATE TABLE agence(
+	id  SERIAL PRIMARY KEY ,
+	nom_agence varchar(50) NOT NULL,
+	logo varchar(250) NOT NULL,
+	date_cmd date NOT NULL,
+	id_tva smallint  NOT NULL,
+	telephone_fixe varchar(50) NOT NULL,
+	portable varchar(50) NOT NULL,
+	fax varchar(50) NOT NULL,
+	email varchar(100) NOT NULL,
+	id_pays smallint  NOT NULL,
+	id_ville smallint  NOT NULL,
+	code_postal smallint  NOT NULL,
+	adresse varchar(250) NOT NULL,
+	login varchar(30) NOT NULL,
+	password char(128)  NOT NULL,
+	salt char(128)  NOT NULL,
+	marge float NOT NULL,
+	type_operation smallint  NOT NULL, 
+	marge_affichage float NOT NULL,
+	cumul_reservation smallint  NOT NULL, 
+	total_solde float NOT NULL,
+	cumul_reservation_solde  float NOT NULL,
+	decouvert float NOT NULL,
+	devise varchar(10) NOT NULL,
+	createdAt timestamp NOT NULL,
+	updatedAt timestamp NOT NULL
+	);
+	
+	
+	CREATE TABLE hotel(
+	id SERIAL  PRIMARY KEY ,
+	ville_id smallint  NOT NULL,
+	nom varchar(70) NOT NULL,
+	tva_id smallint  NOT NULL,
+	enf_min smallint  NOT NULL,
+	enf_max smallint  NOT NULL,
+	adresse text  NOT NULL,
+	info text  NOT NULL,
+	description text  NOT NULL,
+	lien varchar(100) NOT NULL,
+	marge float NOT NULL,
+	etoile smallint  NOT NULL,
+	calcul smallint  NOT NULL,
+	auto_voucher smallint  NOT NULL,
+	operation smallint  NOT NULL,
+	pourcent smallint  NOT NULL,
+	email varchar(50) NOT NULL,
+	price float NOT NULL,
+	fax varchar(50) NOT NULL,
+	tel varchar(50) NOT NULL,
+	logiciel varchar(50) NOT NULL,
+	map text  NOT NULL,
+	act smallint  NOT NULL,
+	stop smallint  NOT NULL,
+	total_reservation float NOT NULL,
+	email2 varchar(50) NOT NULL,
+	marge_c float NOT NULL,
+	operation smallint  NOT NULL,
+	pourcent smallint  NOT NULL,
+	choix_email smallint  NOT NULL,
+	celebate smallint  NOT NULL,
+	destination_id smallint  NOT NULL,
+	marge_h float NOT NULL,
+	source varchar(250) NOT NULL,
+	operationmarge varchar(255) NOT NULL,
+	modifiable smallint  NOT NULL,
+	choixsource varchar(255) NOT NULL,
+	sourcecreate varchar(255) NOT NULL,
+	country_id smallint  NOT NULL,
+	createdAt timestamp NOT NULL,
+	updatedAt timestamp NOT NULL
+	);
+	
+	CREATE TABLE ville(
+	id SERIAL  PRIMARY KEY ,
+	nom_ville varchar(200) NOT NULL,
+	act smallint  NOT NULL,
+	lang varchar(100) NOT NULL,
+	ord smallint  NOT NULL,
+	country_id smallint  NOT NULL,
+	createdAt timestamp NOT NULL,
+	updatedAt timestamp NOT NULL
+	);
+	
+	CREATE TABLE pays(
+	id SERIAL  PRIMARY KEY ,
+	code varchar(4) NOT NULL,
+	nom varchar(50) NOT NULL,
+	createdAt timestamp NOT NULL,
+	updatedAt timestamp NOT NULL
+	);
+	
+	CREATE TABLE client_particulier(
+	id SERIAL  PRIMARY KEY ,
+	nom  varchar(250) NOT NULL,
+	prenom varchar(250) NOT NULL,
+	email  varchar(50) NOT NULL,
+	telephone varchar(50) NOT NULL,
+	num_ident varchar(50) NOT NULL,
+	createdAt timestamp NOT NULL,
+	updatedAt timestamp NOT NULL
+	);
+	
+	CREATE TABLE client(
+	id SERIAL  PRIMARY KEY ,
+	type_client  varchar(255) ,
+	raison_social_entreprise  varchar(255) ,
+	adresse_entreprise varchar(255) ,
+	rne  varchar(255) ,
+	email_entreprise varchar(50),
+	logo_entreprise varchar(50) ,
+	telephone_fixe_entreprise varchar(50) ,
+	fax_entreprise varchar(50) ,
+	nom_personne_encharge_entreprise varchar(250) ,
+	tel_personne_encharge_entreprise varchar(50) ,
+	nom_particulier  varchar(250) ,
+	prenom_particulier varchar(250) ,
+	email_particulier  varchar(50) ,
+	telephone_particulier varchar(50) ,
+	num_identite_particulier varchar(50) 
+	);
+	
+	CREATE TABLE etat_encaissement(
+	id SERIAL  PRIMARY KEY ,
+	reference varchar(255) NOT NULL,
+	type_client varchar(255) NOT NULL,
+	client varchar(255) NOT NULL,
+	montant_total float NOT NULL,
+	mode_paiement varchar(255) NOT NULL,
+	statut_paiement varchar(255) NOT NULL,
+	statut_echelonnement varchar(255) NOT NULL,
+	comment text	
+	);
+	CREATE TABLE users(
+	id SERIAL  PRIMARY KEY ,
+	username varchar(255) NOT NULL,
+	email varchar(255) NOT NULL,
+	password varchar(255) NOT NULL,
+	active smallint NOT NULL,
+	fullName varchar(255) NOT NULL
+	
+	);
+	CREATE TABLE users(
+	id SERIAL  PRIMARY KEY ,
+	username varchar(255) NOT NULL,
+	email varchar(255) NOT NULL,
+	password varchar(255) NOT NULL,
+	active smallint NOT NULL,
+	fullName varchar(255) NOT NULL
+	
+	);
+	
+	CREATE TABLE cheque(
+	id SERIAL  PRIMARY KEY ,
+	type varchar(255) ,
+	num_cheque smallint,
+	reservation_id smallint  ,
+	id_client smallint  ,
+	id_fournisseur smallint,
+	banque varchar(255)  ,
+	date_emision timestamp  ,
+	date_echeance timestamp  ,
+	montant_total FLOAT  ,
+	echu varchar(255)  ,
+	statut_versement varchar(255)  ,
+	date_versement timestamp  ,
+	statut_cheque varchar(255) 
+	
+	
+	);
+	
+	CREATE TABLE fournisseur(
+	id SERIAL  PRIMARY KEY ,	
+	raison_social_entreprise  varchar(255) ,
+	adresse_entreprise varchar(255) ,
+	rne  varchar(255) ,
+	email_entreprise varchar(50),
+	logo_entreprise varchar(50) ,
+	telephone_fixe_entreprise varchar(50) ,
+	fax_entreprise varchar(50) ,
+	nom_personne_encharge_entreprise varchar(250) ,
+	tel_personne_encharge_entreprise varchar(50) 
+	
+	);
+	
+	CREATE TABLE espece(
+	id SERIAL  PRIMARY KEY ,
+	reservation_id smallint  ,
+	id_client smallint  ,
+	id_fournisseur smallint  ,	 
+	montant_total FLOAT 
+	
+	);
+	
+	CREATE TABLE traite(
+	id SERIAL  PRIMARY KEY ,
+	type varchar(255) ,
+	num_traite smallint,
+	reservation_id smallint  ,
+	id_client smallint  ,
+	id_fournisseur smallint,
+	banque varchar(255)  ,
+	date_emision timestamp  ,
+	date_echeance timestamp  ,
+	montant_total FLOAT  ,
+	echu varchar(255)  ,
+	statut_versement varchar(255)  ,
+	date_versement timestamp  ,
+	statut_traite varchar(255) 
+	
+	
+	);
+	CREATE TABLE virement(
+	id SERIAL  PRIMARY KEY ,
+	type varchar(255) ,
+	num_virement smallint,
+	reservation_id smallint  ,
+	id_client smallint  ,
+	id_fournisseur smallint,
+	banque varchar(255)  ,
+	date_emission timestamp  ,
+	montant_total FLOAT  ,
+	statut_virement varchar(255)  
+	
+	
+	
+	);
+	
+	CREATE TABLE paiement_en_ligne(
+	id SERIAL  PRIMARY KEY ,
+	type varchar(255) ,
+	reservation_id smallint  ,
+	id_client smallint  ,
+	id_fournisseur smallint,
+	banque varchar(255)  ,
+	date_emission timestamp  ,
+	montant_total FLOAT  
+		
+	);
+	
+	CREATE TABLE historique_reechelonnement(
+	id SERIAL  PRIMARY KEY ,
+	mode_paiement varchar(250),
+	reservation_id smallint  ,
+	id_client smallint  ,
+	id_fournisseur smallint  ,	
+	id_cheque smallint  ,
+	id_traite smallint  , 
+	date_echeance timestamp  ,
+	montant_total FLOAT 
+	
+	);
+	
+	
+	
+	
+	

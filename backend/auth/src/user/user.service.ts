@@ -1,3 +1,4 @@
+import { HttpService } from '@nestjs/axios';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -9,6 +10,7 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
+    private httpService: HttpService,
   ) {}
   async showAll(): Promise<UserRO[]> {
     const users = await this.userRepository.find();
@@ -16,15 +18,44 @@ export class UserService {
     return users.map(user => user.toResponseObject(false));
   }
   async login(data: UserDTO): Promise<UserRO> {
-    const { username, password } = data;
-    const user = await this.userRepository.findOne({ where: { username } });
-    if (!user || !(await user.comparePassword(password))) {
-      throw new HttpException(
-        'Invalid username/password',
-        HttpStatus.BAD_REQUEST,
-      );
+    try {
+      const { username, password } = data;
+      const user = await this.userRepository.findOne({ where: { username } });
+      console.log(user)
+      if (!user || !(await user.comparePassword(password))) {
+        throw new HttpException(
+          'Invalid username/password',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+      let token;
+      let tokenReturn = () => {
+        return new Promise((resolve, reject) => {
+          this.httpService
+            .post(
+              `https://dev-ltw8h3ds.us.auth0.com/oauth/token`,
+              `{"client_id":"${process.env.CLIENT_ID}","client_secret":"${process.env.CLIENT_SECRET}","audience":"nestjs-api","grant_type":"client_credentials"}`,
+              { headers: { 'content-type': 'application/json' } },
+            )
+            .subscribe(response => {
+              console.log('**************token');
+              console.log(response.data.access_token);
+              token = response.data.access_token;
+              // user.token =
+              resolve(token);
+            });
+        });
+      };
+      token = await tokenReturn();
+      let objRes = Object.assign({
+        user,
+        token,
+      });
+
+      return objRes;
+    } catch (err) {
+      console.log(err);
     }
-    return user.toResponseObject();
   }
   async register(data: UserDTO): Promise<UserRO> {
     const { username } = data;

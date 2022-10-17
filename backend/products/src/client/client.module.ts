@@ -1,3 +1,4 @@
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,6 +9,7 @@ import { ClientService } from './client.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Client]),
+    HttpModule,
     ClientsModule.register([
       {
         name: 'CLIENT_SERVICE',

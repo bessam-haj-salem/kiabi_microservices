@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -10,11 +10,12 @@ import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { HttpErrorFilter } from './shared/http.error.filter';
 import { LogginInterceptor } from './shared/logging.interceptor';
 import { ValidationPipe } from './shared/validation.pipe';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(),    
-    ProductModule,  ClientModule, UserModule,
+    ProductModule,  ClientModule, UserModule, 
   ],
   controllers: [AppController],
   providers: [AppService,

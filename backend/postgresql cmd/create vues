@@ -1,0 +1,393 @@
+
+************ client entreprise****************************
+CREATE VIEW client_entreprise
+as
+SELECT   id, type_client, raison_social_entreprise, adresse_entreprise, rne, email_entreprise, logo_entreprise, telephone_fixe_entreprise, fax_entreprise,nom_personne_encharge_entreprise,tel_personne_encharge_entreprise, code_client FROM client 
+WHERE type_client = 'entreprise'
+GROUP BY id, type_client,raison_social_entreprise, adresse_entreprise, rne, email_entreprise, logo_entreprise, telephone_fixe_entreprise, fax_entreprise,nom_personne_encharge_entreprise,tel_personne_encharge_entreprise,code_client
+;
+
+
+
+CREATE RULE client_entreprise_insert AS  ON INSERT TO client_entreprise
+ DO INSTEAD
+INSERT INTO client (type_client,raison_social_entreprise, adresse_entreprise, rne, email_entreprise, logo_entreprise, telephone_fixe_entreprise, fax_entreprise, nom_personne_encharge_entreprise, tel_personne_encharge_entreprise, code_client) VALUES (NEW.type_client, NEW.raison_social_entreprise, NEW.adresse_entreprise, NEW.rne, NEW.email_entreprise, NEW.logo_entreprise, NEW.telephone_fixe_entreprise, NEW.fax_entreprise, NEW.nom_personne_encharge_entreprise, NEW.tel_personne_encharge_entreprise, NEW.code_client);
+
+
+
+CREATE OR REPLACE RULE client_entreprise_update AS
+    ON UPDATE TO client_entreprise
+    DO INSTEAD
+ UPDATE client SET type_client = new.type_client,raison_social_entreprise = new.raison_social_entreprise,adresse_entreprise = new.adresse_entreprise,rne = new.rne,email_entreprise = new.email_entreprise,logo_entreprise = new.logo_entreprise,telephone_fixe_entreprise = new.telephone_fixe_entreprise,fax_entreprise = new.fax_entreprise,nom_personne_encharge_entreprise = new.nom_personne_encharge_entreprise,tel_personne_encharge_entreprise = new.tel_personne_encharge_entreprise, code_client = new.code_client
+  WHERE client.id = old.id;
+
+
+
+
+
+
+
+
+
+*********************************************************************************
+*********************************************************************************
+remove view :
+DROP VIEW viewnname
+
+//remove rule:
+DROP RULE  client_entreprise_insert on client_entreprise;
+
+ We must index the columns :
+ CREATE INDEX IX_type_client ON client (type_client);
+ CREATE INDEX IX_raison_social_entreprise ON client (raison_social_entreprise);
+ CREATE INDEX IX_rne ON client (rne);
+ CREATE INDEX IX_email_entreprise ON client (email_entreprise);
+ *******************************************************************************
+ *******************************************************************************
+ 
+ ************ client particulier****************************
+ 
+ CREATE VIEW client_particulier
+as
+SELECT   id, type_client, nom_particulier, prenom_particulier, email_particulier, telephone_particulier, num_identite_particulier, code_client, adresse_particulier FROM client 
+WHERE type_client = 'particulier'
+GROUP BY id, type_client, nom_particulier, prenom_particulier, email_particulier, telephone_particulier, num_identite_particulier, code_client, adresse_particulier
+;
+
+CREATE RULE client_particulier_insert AS  ON INSERT TO client_particulier
+ DO INSTEAD
+INSERT INTO client (type_client, nom_particulier, prenom_particulier, email_particulier, telephone_particulier, num_identite_particulier, code_client, adresse_particulier) VALUES (NEW.type_client, NEW.nom_particulier, NEW.prenom_particulier, NEW.email_particulier, NEW.telephone_particulier, NEW.num_identite_particulier, NEW.code_client, NEW.adresse_particulier);
+
+
+CREATE OR REPLACE RULE client_particulier_update AS
+    ON UPDATE TO client_particulier
+    DO INSTEAD
+ UPDATE client SET type_client = new.type_client,nom_particulier = new.nom_particulier,prenom_particulier = new.prenom_particulier,email_particulier = new.email_particulier,telephone_particulier = new.telephone_particulier,num_identite_particulier = new.num_identite_particulier, code_client = new.code_client, adresse_particulier = new.adresse_particulier
+  WHERE client.id = old.id;
+
+************ cheque encaissement****************************
+ 
+ CREATE VIEW cheque_encaissement
+as
+SELECT   id, type, reservation_id, id_client, id_fournisseur, num_cheque, banque,date_emision, date_echeance, montant_total,echu,statut_versement , date_versement, statut_cheque, rib_versement,banque_versement,beneficiaire_versement, sans_provision FROM cheque 
+WHERE type = 'encaissement'
+GROUP BY  id, type, reservation_id, id_client, id_fournisseur, num_cheque, banque,date_emision, date_echeance, montant_total,echu,statut_versement , date_versement, statut_cheque, rib_versement,banque_versement,beneficiaire_versement, sans_provision
+;
+
+CREATE RULE cheque_encaissement_insert AS  ON INSERT TO cheque_encaissement
+ DO INSTEAD
+INSERT INTO cheque (type, reservation_id, id_client, id_fournisseur, num_cheque, banque,date_emision, date_echeance, montant_total,echu,statut_versement , date_versement, statut_cheque, rib_versement,banque_versement,beneficiaire_versement, sans_provision) VALUES (NEW.type, NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.num_cheque, NEW.banque,NEW.date_emision, NEW.date_echeance, NEW.montant_total,NEW.echu,NEW.statut_versement , NEW.date_versement, NEW.statut_cheque, NEW.rib_versement, NEW.banque_versement, NEW.beneficiaire_versement, NEW.sans_provision);
+
+
+CREATE OR REPLACE RULE cheque_encaissement_update AS
+    ON UPDATE TO cheque_encaissement
+    DO INSTEAD
+ UPDATE cheque SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur,num_cheque = new.num_cheque, banque = new.banque, date_emision = new.date_emision,date_echeance = new.date_echeance,montant_total = new.montant_total,echu = new.echu,statut_versement = new.statut_versement,date_versement = new.date_versement,statut_cheque = new.statut_cheque, rib_versement= new.rib_versement,banque_versement= new.banque_versement,beneficiaire_versement= new.beneficiaire_versement, sans_provision= new.sans_provision
+  WHERE cheque.id = old.id;
+  
+************ cheque decaissement****************************
+ 
+ CREATE VIEW cheque_decaissement
+as
+SELECT   id, type, reservation_id, id_client, id_fournisseur, num_cheque, banque,date_emision, date_echeance, montant_total,echu,statut_versement , date_versement, statut_cheque, rib_versement,banque_versement,beneficiaire_versement, sans_provision FROM cheque 
+WHERE type = 'decaissement'
+GROUP BY  id, type, reservation_id, id_client, id_fournisseur, num_cheque, banque,date_emision, date_echeance, montant_total,echu,statut_versement , date_versement, statut_cheque, rib_versement,banque_versement,beneficiaire_versement, sans_provision
+;
+
+CREATE RULE cheque_decaissement_insert AS  ON INSERT TO cheque_decaissement
+ DO INSTEAD
+INSERT INTO cheque (type, reservation_id, id_client, id_fournisseur, num_cheque, banque,date_emision, date_echeance, montant_total,echu,statut_versement , date_versement, statut_cheque,rib_versement,banque_versement,beneficiaire_versement, sans_provision) VALUES (NEW.type, NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.num_cheque, NEW.banque,NEW.date_emision, NEW.date_echeance, NEW.montant_total,NEW.echu,NEW.statut_versement , NEW.date_versement, NEW.statut_cheque, NEW.rib_versement, NEW.banque_versement, NEW.beneficiaire_versement, NEW.sans_provision);
+
+
+CREATE OR REPLACE RULE cheque_decaissement_update AS
+    ON UPDATE TO cheque_decaissement
+    DO INSTEAD
+ UPDATE cheque SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur,num_cheque = new.num_cheque, banque = new.banque, date_emision = new.date_emision,date_echeance = new.date_echeance,montant_total = new.montant_total,echu = new.echu,statut_versement = new.statut_versement,date_versement = new.date_versement,statut_cheque = new.statut_cheque,rib_versement= new.rib_versement,banque_versement= new.banque_versement,beneficiaire_versement= new.beneficiaire_versement, sans_provision=new.sans_provision
+  WHERE cheque.id = old.id;
+  
+************ espece encaissement****************************
+ 
+ CREATE VIEW espece_encaissement
+as
+SELECT   id, type,reservation_id, id_client, id_fournisseur, montant_total, date_espece , rib_versement, banque_versement, beneficiaire_versement, date_versement, statut_versement FROM espece 
+WHERE type = 'encaissement'
+GROUP BY  id, type,reservation_id, id_client, id_fournisseur, montant_total, date_espece , rib_versement, banque_versement, beneficiaire_versement, date_versement, statut_versement
+;
+
+CREATE RULE espece_encaissement_insert AS  ON INSERT TO espece_encaissement
+ DO INSTEAD
+INSERT INTO espece (type,reservation_id, id_client, id_fournisseur, montant_total,date_espece, rib_versement, banque_versement, beneficiaire_versement, date_versement, statut_versement) VALUES (NEW.type,NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.montant_total, NEW.date_espece,  NEW.rib_versement,  NEW.banque_versement,  NEW.beneficiaire_versement,  NEW.date_versement, NEW.statut_versement);
+
+
+CREATE OR REPLACE RULE espece_encaissement_update AS
+    ON UPDATE TO espece_encaissement
+    DO INSTEAD
+ UPDATE espece SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur,montant_total = new.montant_total, date_espece = new.date_espece, rib_versement = new.rib_versement, banque_versement= new.banque_versement, beneficiaire_versement= new.beneficiaire_versement, date_versement= new.date_versement, statut_versement= new.statut_versement
+  WHERE espece.id = old.id;
+  
+  ************ espece decaissement****************************
+ 
+ CREATE VIEW espece_decaissement
+as
+SELECT   id, type,reservation_id, id_client, id_fournisseur, montant_total, date_espece , rib_versement, banque_versement, beneficiaire_versement, date_versement, statut_versement FROM espece 
+WHERE type = 'decaissement'
+GROUP BY  id, type,reservation_id, id_client, id_fournisseur, montant_total, date_espece, rib_versement, banque_versement, beneficiaire_versement, date_versement, statut_versement
+;
+
+CREATE RULE espece_decaissement_insert AS  ON INSERT TO espece_decaissement
+ DO INSTEAD
+INSERT INTO espece (type,reservation_id, id_client, id_fournisseur, montant_total, date_espece , rib_versement, banque_versement, beneficiaire_versement, date_versement, statut_versement) VALUES (NEW.type,NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.montant_total, NEW.date_espece ,  NEW.rib_versement,  NEW.banque_versement,  NEW.beneficiaire_versement,  NEW.date_versement, NEW.statut_versement);
+
+
+CREATE OR REPLACE RULE espece_decaissement_update AS
+    ON UPDATE TO espece_decaissement
+    DO INSTEAD
+ UPDATE espece SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur,montant_total = new.montant_total, date_espece = new.date_espece, rib_versement = new.rib_versement, banque_versement= new.banque_versement, beneficiaire_versement= new.beneficiaire_versement, date_versement= new.date_versement, statut_versement= new.statut_versement
+  WHERE espece.id = old.id;
+  
+  ************ etat encaissement****************************
+ 
+ CREATE VIEW etat_encaissement
+as
+SELECT   id, type,reservation_id, id_client, id_fournisseur, type_client,montant_total,mode_paiement,statut_paiement,statut_echelonnement,comment FROM etat 
+WHERE type = 'encaissement'
+GROUP BY  id, type,reservation_id, id_client, id_fournisseur, type_client,montant_total,mode_paiement,statut_paiement,statut_echelonnement,comment
+;
+
+CREATE RULE etat_encaissement_insert AS  ON INSERT TO etat_encaissement
+ DO INSTEAD
+INSERT INTO etat (type,reservation_id, id_client, id_fournisseur, type_client,montant_total,mode_paiement,statut_paiement,statut_echelonnement,comment) VALUES (NEW.type,NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.type_client,NEW.montant_total,NEW.mode_paiement,NEW.statut_paiement,NEW.statut_echelonnement,NEW.comment);
+
+
+CREATE OR REPLACE RULE etat_encaissement_update AS
+    ON UPDATE TO etat_encaissement
+    DO INSTEAD
+ UPDATE etat SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur,montant_total = new.montant_total,mode_paiement = new.mode_paiement,statut_paiement = new.statut_paiement,statut_echelonnement = new.statut_echelonnement,comment = new.comment
+  WHERE etat.id = old.id;
+
+  ************ etat decaissement****************************
+ 
+ CREATE VIEW etat_decaissement
+as
+SELECT   id, type,reservation_id, id_client, id_fournisseur, type_client,montant_total,mode_paiement,statut_paiement,statut_echelonnement,comment FROM etat 
+WHERE type = 'decaissement'
+GROUP BY  id, type,reservation_id, id_client, id_fournisseur, type_client,montant_total,mode_paiement,statut_paiement,statut_echelonnement,comment
+;
+
+CREATE RULE etat_decaissement_insert AS  ON INSERT TO etat_decaissement
+ DO INSTEAD
+INSERT INTO etat (type,reservation_id, id_client, id_fournisseur, type_client,montant_total,mode_paiement,statut_paiement,statut_echelonnement,comment) VALUES (NEW.type,NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.type_client,NEW.montant_total,NEW.mode_paiement,NEW.statut_paiement,NEW.statut_echelonnement,NEW.comment);
+
+
+CREATE OR REPLACE RULE etat_decaissement_update AS
+    ON UPDATE TO etat_decaissement
+    DO INSTEAD
+ UPDATE etat SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur,montant_total = new.montant_total,mode_paiement = new.mode_paiement,statut_paiement = new.statut_paiement,statut_echelonnement = new.statut_echelonnement,comment = new.comment
+  WHERE etat.id = old.id;
+
+  ************ historique reechelonnement encaissement****************************
+ 
+ CREATE VIEW historique_reechelonnement_encaissement
+as
+SELECT   id, type,reservation_id, id_client, id_fournisseur, mode_paiement,montant_total,id_cheque,id_traite,date_echeance FROM historique_reechelonnement 
+WHERE type = 'encaissement'
+GROUP BY  id, type,reservation_id, id_client, id_fournisseur, mode_paiement,montant_total,id_cheque,id_traite,date_echeance 
+;
+
+CREATE RULE historique_reechelonnement_encaissement_insert AS  ON INSERT TO historique_reechelonnement_encaissement
+ DO INSTEAD
+INSERT INTO historique_reechelonnement (type,reservation_id, id_client, id_fournisseur, mode_paiement,montant_total,id_cheque,id_traite,date_echeance) VALUES (NEW.type,NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.mode_paiement,NEW.montant_total,NEW.id_cheque,NEW.id_traite,NEW.date_echeance );
+
+
+CREATE OR REPLACE RULE historique_reechelonnement_encaissement_update AS
+    ON UPDATE TO historique_reechelonnement_encaissement
+    DO INSTEAD
+ UPDATE historique_reechelonnement SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur, montant_total = new.montant_total,mode_paiement = new.mode_paiement,id_cheque= new.id_cheque,id_traite= new.id_traite,date_echeance= new.date_echeance
+  WHERE historique_reechelonnement.id = old.id;
+
+
+  ************ historique reechelonnement decaissement****************************
+ 
+ CREATE VIEW historique_reechelonnement_decaissement
+as
+SELECT   id, type,reservation_id, id_client, id_fournisseur, mode_paiement,montant_total,id_cheque,id_traite,date_echeance FROM historique_reechelonnement 
+WHERE type = 'decaissement'
+GROUP BY  id, type,reservation_id, id_client, id_fournisseur, mode_paiement,montant_total,id_cheque,id_traite,date_echeance 
+;
+
+CREATE RULE historique_reechelonnement_decaissement_insert AS  ON INSERT TO historique_reechelonnement_decaissement
+ DO INSTEAD
+INSERT INTO historique_reechelonnement (type,reservation_id, id_client, id_fournisseur, mode_paiement,montant_total,id_cheque,id_traite,date_echeance) VALUES (NEW.type,NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.mode_paiement,NEW.montant_total,NEW.id_cheque,NEW.id_traite,NEW.date_echeance );
+
+
+CREATE OR REPLACE RULE historique_reechelonnement_decaissement_update AS
+    ON UPDATE TO historique_reechelonnement_decaissement
+    DO INSTEAD
+ UPDATE historique_reechelonnement SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur, montant_total = new.montant_total,mode_paiement = new.mode_paiement,id_cheque= new.id_cheque,id_traite= new.id_traite,date_echeance= new.date_echeance
+  WHERE historique_reechelonnement.id = old.id;
+  
+   ************ paiement en ligne encaissement****************************
+ 
+ CREATE VIEW paiement_en_ligne_encaissement
+as
+SELECT   id, type,reservation_id, id_client, id_fournisseur, banque, date_emission, montant_total FROM paiement_en_ligne
+WHERE type = 'encaissement'
+GROUP BY  id, type,reservation_id, id_client, id_fournisseur, banque, date_emission, montant_total
+;
+
+CREATE RULE paiement_en_ligne_encaissement_insert AS  ON INSERT TO paiement_en_ligne_encaissement
+ DO INSTEAD
+INSERT INTO paiement_en_ligne (type,reservation_id, id_client, id_fournisseur, banque, date_emission, montant_total) VALUES (NEW.type,NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.banque, NEW.date_emission, NEW.montant_total );
+
+
+CREATE OR REPLACE RULE paiement_en_ligne_encaissement_update AS
+    ON UPDATE TO paiement_en_ligne_encaissement
+    DO INSTEAD
+ UPDATE paiement_en_ligne SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur, montant_total = new.montant_total,banque = new.banque,date_emission= new.date_emission
+  WHERE paiement_en_ligne.id = old.id;
+  
+     ************ paiement en ligne decaissement****************************
+ 
+ CREATE VIEW paiement_en_ligne_decaissement
+as
+SELECT   id, type,reservation_id, id_client, id_fournisseur, banque, date_emission, montant_total FROM paiement_en_ligne
+WHERE type = 'decaissement'
+GROUP BY  id, type,reservation_id, id_client, id_fournisseur, banque, date_emission, montant_total
+;
+
+CREATE RULE paiement_en_ligne_decaissement_insert AS  ON INSERT TO paiement_en_ligne_decaissement
+ DO INSTEAD
+INSERT INTO paiement_en_ligne (type,reservation_id, id_client, id_fournisseur, banque, date_emission, montant_total) VALUES (NEW.type,NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.banque, NEW.date_emission, NEW.montant_total );
+
+
+CREATE OR REPLACE RULE paiement_en_ligne_decaissement_update AS
+    ON UPDATE TO paiement_en_ligne_decaissement
+    DO INSTEAD
+ UPDATE paiement_en_ligne SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur, montant_total = new.montant_total,banque = new.banque,date_emission= new.date_emission
+  WHERE paiement_en_ligne.id = old.id;
+
+
+************ traite encaissement****************************
+ 
+ CREATE VIEW traite_encaissement
+as
+SELECT   id, type,reservation_id, id_client, id_fournisseur, num_traite, banque, date_emision, date_echeance, montant_total, echu,statut_versement,date_versement,statut_traite , rib_versement,banque_versement,beneficiaire_versement, sans_provision FROM traite 
+WHERE type = 'encaissement'
+GROUP BY  id, type,reservation_id, id_client, id_fournisseur, num_traite, banque, date_emision, date_echeance, montant_total, echu,statut_versement,date_versement,statut_traite , rib_versement,banque_versement,beneficiaire_versement, sans_provision
+;
+
+CREATE RULE traite_encaissement_insert AS  ON INSERT TO traite_encaissement
+ DO INSTEAD
+INSERT INTO traite ( type,reservation_id, id_client, id_fournisseur, num_traite, banque, date_emision, date_echeance, montant_total, echu,statut_versement,date_versement,statut_traite, rib_versement,banque_versement,beneficiaire_versement, sans_provision) VALUES (NEW.type, NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.num_traite, NEW.banque,NEW.date_emision, NEW.date_echeance, NEW.montant_total,NEW.echu,NEW.statut_versement , NEW.date_versement, NEW.statut_traite,NEW.rib_versement, NEW.banque_versement,NEW.beneficiaire_versement, NEW.sans_provision);
+
+
+CREATE OR REPLACE RULE traite_encaissement_update AS
+    ON UPDATE TO traite_encaissement
+    DO INSTEAD
+ UPDATE traite SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur,num_traite = new.num_traite, banque = new.banque, date_emision = new.date_emision,date_echeance = new.date_echeance,montant_total = new.montant_total,echu = new.echu,statut_versement = new.statut_versement,date_versement = new.date_versement,statut_traite = new.statut_traite,rib_versement = new.rib_versement,banque_versement= new.banque_versement,beneficiaire_versement= new.beneficiaire_versement, sans_provision= new.sans_provision
+  WHERE traite.id = old.id;
+
+
+************ traite decaissement****************************
+ 
+ CREATE VIEW traite_decaissement
+as
+SELECT   id, type,reservation_id, id_client, id_fournisseur, num_traite, banque, date_emision, date_echeance, montant_total, echu,statut_versement,date_versement,statut_traite, rib_versement,banque_versement,beneficiaire_versement, sans_provision  FROM traite 
+WHERE type = 'decaissement'
+GROUP BY  id, type,reservation_id, id_client, id_fournisseur, num_traite, banque, date_emision, date_echeance, montant_total, echu,statut_versement,date_versement,statut_traite , rib_versement,banque_versement,beneficiaire_versement, sans_provision
+;
+
+CREATE RULE traite_decaissement_insert AS  ON INSERT TO traite_decaissement
+ DO INSTEAD
+INSERT INTO traite ( type,reservation_id, id_client, id_fournisseur, num_traite, banque, date_emision, date_echeance, montant_total, echu,statut_versement,date_versement,statut_traite, rib_versement,banque_versement,beneficiaire_versement, sans_provision) VALUES (NEW.type, NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.num_traite, NEW.banque,NEW.date_emision, NEW.date_echeance, NEW.montant_total,NEW.echu,NEW.statut_versement , NEW.date_versement, NEW.statut_traite , NEW.rib_versement,NEW.banque_versement,NEW.beneficiaire_versement, NEW.sans_provision);
+
+
+CREATE OR REPLACE RULE traite_decaissement_update AS
+    ON UPDATE TO traite_decaissement
+    DO INSTEAD
+ UPDATE traite SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur,num_traite = new.num_traite, banque = new.banque, date_emision = new.date_emision,date_echeance = new.date_echeance,montant_total = new.montant_total,echu = new.echu,statut_versement = new.statut_versement,date_versement = new.date_versement,statut_traite = new.statut_traite , rib_versement= new.rib_versement,banque_versement= new.banque_versement,beneficiaire_versement= new.beneficiaire_versement, sans_provision= new.sans_provision
+  WHERE traite.id = old.id;
+  
+  ************ virement encaissement****************************
+ 
+ CREATE VIEW virement_encaissement
+as
+SELECT   id, type,reservation_id, id_client, id_fournisseur, num_virement, banque, date_emission,  montant_total, statut_virement  FROM virement 
+WHERE type = 'encaissement'
+GROUP BY  id, type,reservation_id, id_client, id_fournisseur, num_virement, banque, date_emission,  montant_total, statut_virement 
+;
+
+CREATE RULE virement_encaissement_insert AS  ON INSERT TO virement_encaissement
+ DO INSTEAD
+INSERT INTO virement ( type,reservation_id, id_client, id_fournisseur, num_virement, banque, date_emission,  montant_total, statut_virement) VALUES (NEW.type,NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.num_virement, NEW.banque, NEW.date_emission,  NEW.montant_total, NEW.statut_virement);
+
+
+CREATE OR REPLACE RULE virement_encaissement_update AS
+    ON UPDATE TO virement_encaissement
+    DO INSTEAD
+ UPDATE virement SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur,num_virement = new.num_virement, banque = new.banque, date_emission = new.date_emission,montant_total = new.montant_total,statut_virement = new.statut_virement
+  WHERE virement.id = old.id;
+    ************ virement decaissement****************************
+ 
+ CREATE VIEW virement_decaissement
+as
+SELECT   id, type,reservation_id, id_client, id_fournisseur, num_virement, banque, date_emission,  montant_total, statut_virement  FROM virement 
+WHERE type = 'decaissement'
+GROUP BY  id, type,reservation_id, id_client, id_fournisseur, num_virement, banque, date_emission,  montant_total, statut_virement 
+;
+
+CREATE RULE virement_decaissement_insert AS  ON INSERT TO virement_decaissement
+ DO INSTEAD
+INSERT INTO virement ( type,reservation_id, id_client, id_fournisseur, num_virement, banque, date_emission,  montant_total, statut_virement) VALUES (NEW.type,NEW.reservation_id, NEW.id_client, NEW.id_fournisseur, NEW.num_virement, NEW.banque, NEW.date_emission,  NEW.montant_total, NEW.statut_virement);
+
+
+CREATE OR REPLACE RULE virement_decaissement_update AS
+    ON UPDATE TO virement_decaissement
+    DO INSTEAD
+ UPDATE virement SET type = new.type,reservation_id = new.reservation_id,id_client = new.id_client,id_fournisseur = new.id_fournisseur,num_virement = new.num_virement, banque = new.banque, date_emission = new.date_emission,montant_total = new.montant_total,statut_virement = new.statut_virement
+  WHERE virement.id = old.id;
+
+ ************ echelonnement encaissement****************************
+ 
+ CREATE VIEW echelonnement_encaissement
+as
+SELECT   id, type,reservation_id, statut_echelonnement,comment FROM echelonnement 
+WHERE type = 'encaissement'
+GROUP BY  id, type,reservation_id, statut_echelonnement,comment
+;
+
+CREATE RULE echelonnement_encaissement_insert AS  ON INSERT TO echelonnement_encaissement
+ DO INSTEAD
+INSERT INTO echelonnement (type,reservation_id, statut_echelonnement,comment) VALUES (NEW.type,NEW.reservation_id, NEW.statut_echelonnement,NEW.comment);
+
+
+CREATE OR REPLACE RULE echelonnement_encaissement_update AS
+    ON UPDATE TO echelonnement_encaissement
+    DO INSTEAD
+ UPDATE echelonnement SET type = new.type,reservation_id = new.reservation_id,statut_echelonnement = new.statut_echelonnement,comment = new.comment
+  WHERE echelonnement.id = old.id;
+  
+  
+  
+ ************ HISTORIQUE encaissement****************************
+ 
+ CREATE VIEW historique_reechelonnement_encaissement
+as
+SELECT   id, type,reservation_id, statut_echelonnement,comment FROM historique_reechelonnement 
+WHERE type = 'encaissement'
+GROUP BY  id, type,reservation_id, statut_echelonnement,comment
+;
+
+CREATE RULE historique_reechelonnement_encaissement_insert AS  ON INSERT TO historique_reechelonnement_encaissement
+ DO INSTEAD
+INSERT INTO historique_reechelonnement (type,reservation_id, statut_echelonnement,comment) VALUES (NEW.type,NEW.reservation_id, NEW.statut_echelonnement,NEW.comment);
+
+
+CREATE OR REPLACE RULE echelonnement_encaissement_update AS
+    ON UPDATE TO echelonnement_encaissement
+    DO INSTEAD
+ UPDATE echelonnement SET type = new.type,reservation_id = new.reservation_id,statut_echelonnement = new.statut_echelonnement,comment = new.comment
+  WHERE echelonnement.id = old.id;
+
+
+

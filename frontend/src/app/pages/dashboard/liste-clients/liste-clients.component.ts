@@ -20,8 +20,11 @@ import {
   combineLatest,
   combineLatestWith,
   map,
+  merge,
   Observable,
   of,
+  scan,
+  shareReplay,
   Subject,
   tap,
 } from "rxjs";
@@ -47,12 +50,21 @@ export class ListeClientsComponent implements OnInit {
   public boolEditForm: boolean = false;
   public boolTablesForm: boolean = true;
   public clients$: Observable<Client[]> = of([]);
+  public clientInserted$;
   public filteredClients$: Observable<Client[]> = of([]);
-  public clientSelected: Client;
   private _clientFilter = "";
-  public filterSubject: Subject<string> = new BehaviorSubject<string>('');
+  public filterSubject: Subject<string> = new BehaviorSubject<string>("");
+  public clientSelected$: Observable<Client>;
   editForm: FormGroup;
+  // clientSelected = {
+  //   id: 1 ,
+  //   raison_social : "jkhjkh" ,
+  //   num_sirette: "jkhjkh" ,
+  //   adresse: "jkhjkh" ,
+  //   email:"jkhjkh"  ,
+  //   telephone: "jkhjkh"
 
+  // }
   constructor(
     private clientService: ClientService,
     private fb: FormBuilder,
@@ -60,6 +72,13 @@ export class ListeClientsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // this.clientService.getClients().subscribe(data => {
+    //   console.log(data)
+    // })
+
+    // this.clientService.getClientsWithAdd().subscribe(data => {
+    //   console.log(data)
+    // })
     this.listClient();
     this.editForm = this.fb.group({
       raison_social: null,
@@ -68,15 +87,12 @@ export class ListeClientsComponent implements OnInit {
       email: null,
       telephone: null,
     });
+
     // console.log(isDevMode());
   }
 
-  //   ngOnChanges(): void {
-  //     this.listClient();
-  //   }
-  // ngAfterViewInit(): void {
-  //   this.ngOnChanges()
-  // }
+  ngOnChanges(): void {}
+  ngAfterViewInit(): void {}
   public get clientFilter(): string {
     return this._clientFilter;
   }
@@ -91,6 +107,7 @@ export class ListeClientsComponent implements OnInit {
   listClient() {
     this.clients$ = this.clientService.getClients().pipe(
       map((clients) => {
+        // console.log(clients)
         if (clients.collection != undefined) {
           return clients.collection;
         } else {
@@ -98,25 +115,32 @@ export class ListeClientsComponent implements OnInit {
         }
       })
     );
+    let clientAdd$ = merge(
+      this.clients$,
+      this.clientService.clientInserted$
+    ).pipe(
+      tap((data) => console.log(data)),
+      scan((acc: Client[], value: any) => {
+        console.log(acc);
+        console.log(value);
+        // const index =acc.findIndex((client) => client.id === value.id)
+        // if(index !== -1) {
+        //   acc[index] = value
+        //   return acc
+        // }
+        return [...acc, value];
+      }),
+      shareReplay(1)
+    );
+    console.log(clientAdd$);
+    // this.clients$ = this.clientService.clientsWithAdd$
     this.filteredClients$ = this.createFilterClients(
       this.filterSubject,
-      this.clients$
-    ).pipe(
-      tap(res => console.log(res))
+      clientAdd$
     );
-    // this.clientFilter =''
-    // this.subs.sink = this.clientService
-    //   .getClients()
-    //   .subscribe((clients: any) => {
-    //     this.loading = false
-    //   console.log(clients)
-    //     if (clients.collection != undefined) {
-
-    //       this.clients = clients.collection;
-    //     } else {
-    //       this.clients = clients;
-    //     }
-    // });
+    // .pipe(tap((res) => console.log(res)));
+    this.clientSelected$ = this.clientService.getSelected$;
+ 
   }
 
   public createFilterClients(
@@ -126,14 +150,15 @@ export class ListeClientsComponent implements OnInit {
     return clients$.pipe(
       combineLatestWith(filter$),
       map(([clients, filter]) => {
-        console.log(filter)
-        console.log(clients)
-        if (filter === "")  return clients
-          return clients.filter(
-            (client: Client) =>
-              client.raison_social.toLocaleLowerCase().indexOf(filter.toLocaleLowerCase()) !== -1
-          );
-        
+        // console.log(filter);
+        // console.log(clients);
+        if (filter === "") return clients;
+        return clients.filter(
+          (client: Client) =>
+            client.raison_social
+              .toLocaleLowerCase()
+              .indexOf(filter.toLocaleLowerCase()) !== -1
+        );
       })
     );
   }
@@ -176,16 +201,17 @@ export class ListeClientsComponent implements OnInit {
     });
   }
 
-  public updateClient(id) {
-    let idclient = id;
-    this.idClient = id;
-    let clients = this.clients;
-    for (let i = 0; i < clients.length; i++) {
-      if (clients[i].id === idclient) {
-        this.clientSelected = clients[i];
-      }
-    }
-    console.log(this.clientSelected);
+  public updateClient(client: Client) {
+    // let idclient = id;
+    this.idClient = client.id;
+    console.log(this.idClient);
+    // let clients = this.clients;
+    // for (let i = 0; i < clients.length; i++) {
+    //   if (clients[i].id === idclient) {
+    //     this.clientSelected = clients[i];
+    //   }
+    // }
+    this.clientService.getSelectedClient(client);
     this.boolTablesForm = true;
     this.boolListForm = false;
     this.boolEditForm = true;

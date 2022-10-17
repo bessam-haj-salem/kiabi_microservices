@@ -36,6 +36,7 @@ let ClientController = class ClientController {
         });
     }
     async clientUpdated(client) {
+        console.log("********mynew client");
         console.log(client);
         const updatedclient = await this.clientService.findOne(client.id);
         if (updatedclient) {
