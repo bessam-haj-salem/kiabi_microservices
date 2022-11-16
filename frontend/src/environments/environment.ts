@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   // users
-  urlUsers: "http://localhost:9000/users/",
-  urlUserLogin: "http://localhost:9000/users/login",
-  // urlGetUsers: "http://localhost:4000/api/users",
+  // urlUsers: "http://localhost:9000/users/",
+  // urlUserLogin: "http://localhost:9000/users/login",
+  urlUsers: "api/users",
+  urlUserLogin: "api/users/login",
   // urlAddUser: "http://localhost:4000/api/users/register",
   // urlDeleteUser: "http://localhost:4000/api/users/delete/",
   // urlUpdateUser: "http://localhost:4000/api/users/update/",
-  // urlLoginUser: "http://localhost:4000/api/users/login",
   // API
   urlApiCrackend: "http://localhost:9000/api",
   urlAddRabbit: "http://localhost:9000/clients/produce",

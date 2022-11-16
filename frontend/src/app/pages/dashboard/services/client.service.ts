@@ -61,11 +61,11 @@ export class ClientService {
       scan((acc: Client[], value:any) => {
         console.log(acc)
         console.log(value)
-        // const index =acc.findIndex((client) => client.id === value.id)
-        // if(index !== -1) {
-        //   acc[index] = value
-        //   return acc
-        // }
+        const index =acc.findIndex((client) => client.id === value.id)
+        if(index !== -1) {
+          acc[index] = value
+          return acc
+        }
         return [...acc,value]
       }),
       shareReplay(1)
@@ -78,11 +78,12 @@ public clientsWithAdd$ = merge(
   scan((acc: Client[], value:any) => {
     console.log(acc)
     console.log(value)
-    // const index =acc.findIndex((client) => client.id === value.id)
-    // if(index !== -1) {
-    //   acc[index] = value
-    //   return acc
-    // }
+    const index =acc.findIndex((client) => client.id === value.id)
+    console.log(index)
+    if(index !== -1) {
+      acc[index] = value
+      return acc
+    }
     return [...acc,value]
   }),
   shareReplay(1)

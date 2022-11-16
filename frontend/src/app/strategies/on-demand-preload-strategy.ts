@@ -12,25 +12,15 @@ export class OnDemandPreloadStrategy implements PreloadingStrategy {
     }
 
     preload(route:Route, load: () => Observable<any>): Observable<any> {
-        // console.log(route);
         return this.preloadOnDemand$.pipe(
             mergeMap(preloadOptions => {
-                // console.log(route);
                 const shouldPreload = this.preloadCheck(route, preloadOptions)
-                // console.log(shouldPreload);
-                if(shouldPreload) {
-                    // console.log(`Preloading: Checking if we need preload ${route.path}`);
-                }
                 return shouldPreload ? load() : EMPTY
             })
         )
 
     }
     private preloadCheck(route: Route, preloadOptions: OnDemandPreloadOptions) {
-        // console.log([route.path]);
-        // console.log(route?.data?.preload);
-        // console.log(preloadOptions.routePath);
-        // console.log([route.path].includes(preloadOptions.routePath));
         return (
             route?.data?.preload && [route.path].includes(preloadOptions.routePath) &&
             preloadOptions.preload

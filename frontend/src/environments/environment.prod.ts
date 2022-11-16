@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
   // users
-  urlUsers: "http://localhost:8099/users/",
-  urlUserLogin: "http://localhost:8099/users/login",
+  urlUsers: "http://localhost:4000/api/users",
+  urlUserLogin: "http://localhost:4000/api/users/login",
 
   // urlGetUsers: "http://localhost:4000/api/users",
   // urlAddUser: "http://localhost:4000/api/users/register",

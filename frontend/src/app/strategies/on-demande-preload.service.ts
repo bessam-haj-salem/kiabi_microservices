@@ -14,7 +14,7 @@ export class OnDemandePreloadService  {
 
   startPreload(routePath:string) {
     const message = new OnDemandPreloadOptions(routePath, true)
-    // console.log(message);
+    console.log(message);
     this.subject.next(message)
   }
 

@@ -31,7 +31,7 @@ export class UserService {
    }
 
    getUsers() {
-     return this.http.get<User[]>(this.urlUsers + 123)
+     return this.http.get<User[]>(this.urlUsers)
    }
    addUser(data) {
      return this.http.post<User>(this.urlUsers + 123, data)

@@ -1,0 +1,6 @@
+FROM node:14.20.1-alpine3.15
+WORKDIR /app
+COPY ./package.json ./
+RUN npm i
+COPY . .
+CMD ["npm", "start"]

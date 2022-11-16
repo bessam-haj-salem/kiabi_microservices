@@ -123,11 +123,11 @@ export class ListeClientsComponent implements OnInit {
       scan((acc: Client[], value: any) => {
         console.log(acc);
         console.log(value);
-        // const index =acc.findIndex((client) => client.id === value.id)
-        // if(index !== -1) {
-        //   acc[index] = value
-        //   return acc
-        // }
+        const index =acc.findIndex((client) => client.id === value.id)
+        if(index !== -1) {
+          acc[index] = value
+          return acc
+        }
         return [...acc, value];
       }),
       shareReplay(1)
@@ -223,10 +223,11 @@ export class ListeClientsComponent implements OnInit {
     this.subs.sink = this.clientService
       .editClient(formValue)
       .subscribe((res) => {
+        this.clientService.insertClient(formValue)
         this.editForm.reset();
-        setTimeout(() => {
-          this.listClient();
-        }, 500);
+        // setTimeout(() => {
+        //   this.listClient();
+        // }, 500);
 
         // console.log(res);
       });
